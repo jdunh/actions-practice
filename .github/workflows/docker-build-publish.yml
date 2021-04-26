@@ -21,4 +21,4 @@ jobs:
         push: true
         no-cache: true
         file: Dockerfile
-        tags: dunhamj/hello-world:v3,dunhamj/hello-world:latest
+        tags: dunhamj/hello-world:v2
