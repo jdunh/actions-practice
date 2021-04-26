@@ -22,3 +22,5 @@ jobs:
           no-cache: true
           file: Dockerfile
           tags: dunhamj/hello-world:v2
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
