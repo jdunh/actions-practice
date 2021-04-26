@@ -18,5 +18,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        no-cache: true
-        tags: best,latest
+        tags: docker.io/dunhamj/hello-world:latest
