@@ -1,0 +1,20 @@
+name: test_docker_build_push
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD}} https://index.docker.io/v1/
+    - name: Build Docker Image
+      run: docker build --build-arg https_proxy="http://some.proxy:port" --no-cache=true --pull=true --file=Dockerfile . -t index.docker.io/dunhamj/hello-world:v3 -t index.docker.io/dunhamj/hello-world:best -t index.docker.io/dunhamj/hello-world:latest
+    - name: Push Docker Image
+      run: docker push index.docker.io/dunhamj/hello-world:v3
+    - name: Push Docker Image
+      run: docker push index.docker.io/dunhamj/hello-world:best
+    - name: Push Docker Image
+      run: docker push index.docker.io/dunhamj/hello-world:latest
