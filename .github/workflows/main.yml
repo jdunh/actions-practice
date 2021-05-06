@@ -13,14 +13,24 @@ jobs:
     - name: echo message
       run: echo "Hi ${{ env.USER_NAME }}"
       env:
-        PASSWORD: "${{ secret.ssshhh_PASSWORD }}"
-        USER_NAME: "${{ secret.ssshhh_USER_NAME }}"
+        PASSWORD: "${{ secrets.ssshhh_PASSWORD }}"
+        USER_NAME: "${{ secrets.ssshhh_USER_NAME }}"
     - name: echo message
       run: echo "Your password is ${{ env.PASSWORD }}"
       env:
-        PASSWORD: "${{ secret.ssshhh_PASSWORD }}"
-        USER_NAME: "${{ secret.ssshhh_USER_NAME }}"
+        PASSWORD: "${{ secrets.ssshhh_PASSWORD }}"
+        USER_NAME: "${{ secrets.ssshhh_USER_NAME }}"
     - name: echo message
       run: echo "here is your ${{ env.MY_PASS }}"
       env:
-        MY_PASS: "${{ secret.ssshhh_MY_PASS }}"
+        MY_PASS: "${{ secrets.ssshhh_MY_PASS }}"
+  second-stage:
+    name: second stage
+    runs-on: ubuntu-latest
+    needs: first-stage
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: echo message
+      run: echo No with stage!
+
