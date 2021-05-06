@@ -1,0 +1,26 @@
+# This is a basic workflow to help you get started with Actions
+
+name: withCreds
+on:
+  workflow_dispatch:
+jobs:
+  first-stage:
+    name: first stage
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: echo message
+      run: echo "Hi ${{ env.USER_NAME }}"
+      env:
+        PASSWORD: "${{ secret.ssshhh_PASSWORD }}"
+        USER_NAME: "${{ secret.ssshhh_USER_NAME }}"
+    - name: echo message
+      run: echo "Your password is ${{ env.PASSWORD }}"
+      env:
+        PASSWORD: "${{ secret.ssshhh_PASSWORD }}"
+        USER_NAME: "${{ secret.ssshhh_USER_NAME }}"
+    - name: echo message
+      run: echo "here is your ${{ env.MY_PASS }}"
+      env:
+        MY_PASS: "${{ secret.ssshhh_MY_PASS }}"
