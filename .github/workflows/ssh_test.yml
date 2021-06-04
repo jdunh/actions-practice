@@ -32,6 +32,6 @@ jobs:
     - name: run command over ssh
       run: |-
         ssh SSH_SERVER << EOF
-          echo "Hi from Jenkins $(date)" > remote_server.txt
-          ls
+           echo "Hi from Jenkins $(date)" > remote_server.txt
+           echo "Hello Again!"
         EOF
