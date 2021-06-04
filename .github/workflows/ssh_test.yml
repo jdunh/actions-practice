@@ -26,7 +26,7 @@ jobs:
         if_key_exists: fail
         config: |
           Host SSH_SERVER
-            HostName ${{ secrets.HOST_NAME }}
+            HostName ${{ secrets.SSH_HOST_NAME }}
             User ${{ secrets.SSH_USER }}
             IdentityFile ~/.ssh/id_rsa-ssh_server
     - name: run command over ssh
