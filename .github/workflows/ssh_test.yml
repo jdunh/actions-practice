@@ -31,5 +31,6 @@ jobs:
             IdentityFile ~/.ssh/id_rsa-ssh_server
     - name: run command over ssh
       run: |-
-        ssh SSH_SERVER echo "Hi from Jenkins $(date)" > remote_server.txt
-        ssh SSH_SERVER echo "Hello Again!"
+        ssh SSH_SERVER 
+        echo "Hi from Jenkins $(date)" > remote_server.txt
+        ls
