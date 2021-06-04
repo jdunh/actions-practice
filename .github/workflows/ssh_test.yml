@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: SSH Test
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: |-
+        echo "${{ github.workflow }}-${{ github.run_id }}" > job.txt
+        echo "testing" > new.txt
+    # Ensure parameter if_key_exists is set correctly
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: "${{ secrets.SSH_KEY }}"
+        name: id_rsa-ssh_server
+        known_hosts: "${{ secrets.KNOWN_HOSTS }}"
+        if_key_exists: fail
+        config: |
+          Host SSH_SERVER
+            HostName ${{ secrets.HOST_NAME }}
+            User ${{ secrets.SSH_USER }}
+            IdentityFile ~/.ssh/id_rsa-ssh_server
+    - name: run command over ssh
+      run: |-
+        ssh SSH_SERVER echo "Hi from Jenkins $(date)" > remote_server.txt
+        ssh SSH_SERVER echo "Hello Again!"
