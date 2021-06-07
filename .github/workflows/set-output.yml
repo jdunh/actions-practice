@@ -1,0 +1,27 @@
+# This is a basic workflow to help you get started with Actions
+
+name: set-output-fun
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - id: set-transfer-files
+        uses: actions/github-script@v3
+        with:
+          script: |-
+            const globber = await glob.create(*.txt
+            new/test/*.json)
+            const files = await globber.glob()
+            return files
+          
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo "${{steps.set-transfer-files.outputs.result}}"
+
