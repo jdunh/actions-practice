@@ -23,11 +23,9 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |-
-            const globber = await glob.create("*.txt\nnew/test/*.json")
+            const globber = await glob.create("**/**.txt\nnew/test/*.json")
             const files = await globber.glob()
             return files
-          
-      # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo "${{steps.set-transfer-files.outputs.result}}"
 
