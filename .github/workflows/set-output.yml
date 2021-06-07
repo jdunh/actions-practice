@@ -23,7 +23,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |-
-            const globber = await glob.create("*.txt new/test/*.json")
+            const globber = await glob.create("*.txt\nnew/test/*.json")
             const files = await globber.glob()
             return files
           
