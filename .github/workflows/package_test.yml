@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: package?
         run: |
-          which rsync
+          shopt
           which ssh
           which scp
           which sftp
