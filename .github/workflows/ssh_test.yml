@@ -36,14 +36,25 @@ jobs:
       uses: actions/github-script@v3
       with:
         script: |-
-          const globber = await glob.create(*.txt
-          new/test/*.json)
-          const files = await globber.glob()
-          return files
+          const fs = require('fs').promises
+          const path = require('path')
+          const globber = await glob.create(#{source_files})
+          const dirs = []
+          for await (const file of globber.globGenerator()) {
+              if ((await fs.lstat(file)).isDirectory()) continue
+              if (!dirs.includes(path.dirname(file))) {
+                dirs.push(path.dirname(file));
+              }
+              console.log(file);
+          }
+          console.log("Print Dirs");
+          console.log(dirs);
+          return dirs.join(" ");
     - name: run SSH_SERVER file transfer
       run:
-      - ssh SSH_SERVER 'mkdir -p ${{ env.REMOTE_DIRECTORY }}'
-      - scp ${{steps.set-transfer-files.outputs.result}} SSH_SERVER:${{ env.REMOTE_DIRECTORY }}
+      - echo '${{steps.set-transfer-files.outputs.result}}'
+      - ssh SSH_SERVER 'mkdir -p ${{steps.set-transfer-files.outputs.result}}'
+#       - scp ${{steps.set-transfer-files.outputs.result}} SSH_SERVER:${{ env.REMOTE_DIRECTORY }}
       env:
         REMOTE_DIRECTORY: "./goo"
     - name: run SSH_SERVER commands over ssh
