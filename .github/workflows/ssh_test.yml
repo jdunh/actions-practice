@@ -38,8 +38,15 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const globber = await glob.create(#{source_files})
+          const globber = await glob.create("**/**.txt")
           const dirs = []
+          for await (const file of globber.globGenerator()) {
+              if ((await fs.lstat(file)).isDirectory()) continue
+              if (!dirs.includes(path.dirname(file))) {
+                dirs.push(path.dirname(file));
+              }
+              console.log(file);
+          }
           console.log("Print Dirs");
           console.log(dirs);
           return dirs.join(" ");
