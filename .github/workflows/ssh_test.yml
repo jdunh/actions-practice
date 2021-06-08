@@ -49,7 +49,7 @@ jobs:
           }
           console.log("Print Dirs");
           console.log(dirs);
-          return "~/test1";
+          return "~/test1 ~/test23";
     - name: run SSH_SERVER file transfer
       run: |-
         echo '${{steps.set-transfer-files.outputs.result}}'
