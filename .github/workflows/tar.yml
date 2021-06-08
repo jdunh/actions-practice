@@ -57,7 +57,7 @@ jobs:
         ssh SSH_SERVER 'mkdir -p ${{ env.REMOTE_DIRECTORY }}'
         tar -cvf SSH_SERVER.tar --files-from file_export.txt
         scp SSH_SERVER.tar SSH_SERVER:
-        tar -xvf SSH_SERVER.tar -C ${{ env.REMOTE_DIRECTORY }}
+        ssh SSH_SERVER 'tar -xvf SSH_SERVER.tar -C ${{ env.REMOTE_DIRECTORY }}'
       env:
         REMOTE_DIRECTORY: UPDATE_ME
     - name: run SSH_SERVER commands over ssh
