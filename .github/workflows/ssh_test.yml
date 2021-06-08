@@ -51,10 +51,9 @@ jobs:
           console.log(dirs);
           return dirs.join(" ");
     - name: run SSH_SERVER file transfer
-      run:
-      - echo '${{steps.set-transfer-files.outputs.result}}'
-      - ssh SSH_SERVER 'mkdir -p ${{steps.set-transfer-files.outputs.result}}'
-#       - scp ${{steps.set-transfer-files.outputs.result}} SSH_SERVER:${{ env.REMOTE_DIRECTORY }}
+      run: |-
+        echo '${{steps.set-transfer-files.outputs.result}}'
+        ssh SSH_SERVER 'mkdir -p ${{steps.set-transfer-files.outputs.result}}'
       env:
         REMOTE_DIRECTORY: "./goo"
     - name: run SSH_SERVER commands over ssh
