@@ -1,0 +1,68 @@
+# This is a basic workflow to help you get started with Actions
+
+name: tar test
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: |-
+        echo "${{ github.workflow }}-${{ github.run_id }}" > job.txt
+        echo "testing" > new.txt
+        mkdir -p new/test
+        echo "{}" > new/test/bar.json
+        ls new/test
+    # Ensure parameter if_key_exists is set correctly
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: "${{ secrets.SSH_KEY }}"
+        name: id_rsa-ssh_server
+        known_hosts: "${{ secrets.KNOWN_HOSTS }}"
+        if_key_exists: fail
+        config: |
+          Host SSH_SERVER
+            HostName ${{ secrets.SSH_HOST_NAME }}
+            User ${{ secrets.SSH_USER }}
+            IdentityFile ~/.ssh/id_rsa-ssh_server
+    - id: set-transfer-files
+      uses: actions/github-script@v3
+      with:
+        script: |-
+          const fs = require('fs').promises
+          const path = require('path')
+          const patterns = "*.txt,new/test/*.json"
+          const globber = await glob.create(patterns.replace(",", "\n"))
+          const files = []
+          for await (const file of globber.globGenerator()) {
+              if ((await fs.lstat(file)).isDirectory()) continue
+              files.push(path.relative(process.cwd(), file))
+          }
+          fs.writeFile("file_export.txt", files.join("\n"), (err) => {
+              if (err)
+                  console.log(err);
+              else {
+                  console.log("Successfully generated export file")
+              }
+          })
+    - name: run JOELS_TEMP_SSH_SERVER file transfer
+      run:
+      - ssh SSH_SERVER 'mkdir -p ${{ env.REMOTE_DIRECTORY }}'
+      - tar -cvf SSH_SERVER.tar --files-from file_export.txt
+      - scp SSH_SERVER.tar SSH_SERVER
+      - tar -xvf SSH_SERVER.tar -C ${{ env.REMOTE_DIRECTORY }}
+      env:
+        REMOTE_DIRECTORY: UPDATE_ME
+    - name: run SSH_SERVER commands over ssh
+      run: |-
+        ssh SSH_SERVER << EOF
+           echo "Hi from Jenkins $(date)" > remote_server.txt
+           echo "Hello Again!"
+        EOF
