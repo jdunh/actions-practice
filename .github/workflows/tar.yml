@@ -62,7 +62,5 @@ jobs:
         REMOTE_DIRECTORY: UPDATE_ME
     - name: run SSH_SERVER commands over ssh
       run: |-
-        ssh SSH_SERVER << EOF
-           echo "Hi from Jenkins $(date)" > remote_server.txt
-           echo "Hello Again!"
-        EOF
+        ssh SSH_SERVER 'echo "Hi from Jenkins $(date)" > remote_server.txt'
+        ssh SSH_SERVER 'echo "Hello Again!"'
