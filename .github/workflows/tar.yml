@@ -24,15 +24,15 @@ jobs:
       uses: shimataro/ssh-key-action@v2
       with:
         key: "${{ secrets.SSH_KEY }}"
-        name: id_rsa-ssh_server
+        name: id_rsa-joels_temp_ssh_server
         known_hosts: "${{ secrets.KNOWN_HOSTS }}"
         if_key_exists: fail
         config: |
-          Host SSH_SERVER
+          Host JOELS_TEMP_SSH_SERVER
             HostName ${{ secrets.SSH_HOST_NAME }}
             User ${{ secrets.SSH_USER }}
-            IdentityFile ~/.ssh/id_rsa-ssh_server
-    - id: set-transfer-files
+            IdentityFile ~/.ssh/id_rsa-joels_temp_ssh_server
+    - name: setup file tranfer file
       uses: actions/github-script@v3
       with:
         script: |-
@@ -45,22 +45,14 @@ jobs:
               if ((await fs.lstat(file)).isDirectory()) continue
               files.push(path.relative(process.cwd(), file))
           }
-          fs.writeFile("file_export.txt", files.join("\n"), (err) => {
-              if (err)
-                  console.log(err);
-              else {
-                  console.log("Successfully generated export file")
-              }
-          })
-    - name: run JOELS_TEMP_SSH_SERVER file transfer
+          fs.writeFile("joels_temp_ssh_server-transfer.txt", files.join("\n"), (err) => {})
+    - name: run file transfers
       run: |-
-        ssh SSH_SERVER 'mkdir -p ${{ env.REMOTE_DIRECTORY }}'
-        tar -cvf SSH_SERVER.tar --files-from file_export.txt
-        scp SSH_SERVER.tar SSH_SERVER:
-        ssh SSH_SERVER 'tar -xvf SSH_SERVER.tar -C ${{ env.REMOTE_DIRECTORY }} && rm SSH_SERVER.tar'
-      env:
-        REMOTE_DIRECTORY: UPDATE_ME
-    - name: run SSH_SERVER commands over ssh
+        ssh JOELS_TEMP_SSH_SERVER 'mkdir -p goo/foo'
+        tar -cvf joels_temp_ssh_server-transfer.tar --files-from joels_temp_ssh_server-transfer.txt
+        scp joels_temp_ssh_server-transfer.tar JOELS_TEMP_SSH_SERVER:
+        ssh JOELS_TEMP_SSH_SERVER 'tar -xvf joels_temp_ssh_server-transfer.tar -C goo/foo && rm joels_temp_ssh_server-transfer.tar'
+    - name: run commands over ssh
       run: |-
-        ssh SSH_SERVER 'echo "Hi from Jenkins $(date)" > remote_server.txt'
-        ssh SSH_SERVER 'echo "Hello Again!"'
+        ssh JOELS_TEMP_SSH_SERVER 'echo "Hi from Jenkins $(date)" > remote_server.txt'
+        ssh JOELS_TEMP_SSH_SERVER 'echo "Hello Again!"'
