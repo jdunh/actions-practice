@@ -22,7 +22,7 @@ jobs:
       with:
         key: "${{ secrets.SSH_KEY }}"
         name: id_rsa-3_80_23_15
-        known_hosts: "${{ secrets.KNOWN_HOSTS }}"
+        known_hosts: "${{ secrets.HOST_3_80_23_15_KNOWN_HOSTS }}"
         if_key_exists: fail
         config: |
           Host 3.88.199.28
