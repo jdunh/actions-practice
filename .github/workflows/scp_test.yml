@@ -1,0 +1,52 @@
+name: test_scp
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: |-
+        echo "${{ github.workflow }}-${{ github.run_id }}" > job.txt
+        echo "testing" > new.txt
+        mkdir -p new/test
+        echo "{}" > new/test/bar.json
+        ls new/test
+    # Ensure parameter if_key_exists is set correctly
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: "${{ secrets.3_80_23_15_SSH_KEY }}"
+        name: id_rsa-3_80_23_15
+        known_hosts: "${{ secrets.KNOWN_HOSTS }}"
+        if_key_exists: fail
+        config: |
+          Host 3.88.199.28
+            HostName 3.88.199.28
+            User ${{ secrets.SSH_USER }}
+            IdentityFile ~/.ssh/id_rsa-3_80_23_15
+    - name: setup file transfer file
+      uses: actions/github-script@v3
+      with:
+        script: |-
+          const fs = require('fs').promises
+          const path = require('path')
+          const patterns = "**/**.txt"
+          const globber = await glob.create(patterns.replace(",", "\n"))
+          const files = []
+          for await (const file of globber.globGenerator()) {
+              if ((await fs.lstat(file)).isDirectory()) continue
+              files.push(path.relative(process.cwd(), file))
+          }
+          fs.writeFile("scp_transfer.txt", files.join("\n"), (err) => {})
+    - name: run file transfers
+      run: |-
+        ssh 3.88.199.28 'mkdir -p /goo'
+        tar -cvf scp_transfer.tar --files-from scp_transfer.txt
+        scp scp_transfer.tar 3.88.199.28:
+        ssh 3.88.199.28 'tar -xvf scp_transfer.tar -C /goo && rm scp_transfer.tar'
+  
