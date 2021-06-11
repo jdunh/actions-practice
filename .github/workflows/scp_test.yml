@@ -45,8 +45,8 @@ jobs:
           fs.writeFile("scp_transfer.txt", files.join("\n"), (err) => {})
     - name: run file transfers
       run: |-
-        ssh 3.88.199.28 'mkdir -p /goo'
+        ssh 3.88.199.28 'mkdir -p goo'
         tar -cvf scp_transfer.tar --files-from scp_transfer.txt
         scp scp_transfer.tar 3.88.199.28:
-        ssh 3.88.199.28 'tar -xvf scp_transfer.tar -C /goo && rm scp_transfer.tar'
+        ssh 3.88.199.28 'tar -xvf scp_transfer.tar -C goo && rm scp_transfer.tar'
   
