@@ -12,14 +12,13 @@ jobs:
       - name: package?
         run: |
           which ftp
-          which lftp
   macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: package?
         run: |
-          which ftp
+          brew install lftp
           which lftp
   ubuntu:
     runs-on: ubuntu-latest
@@ -28,4 +27,3 @@ jobs:
       - name: package?
         run: |
           which ftp
-          which lftp
