@@ -5,10 +5,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  windows:
     runs-on: windows-latest
     steps:
-
+      - uses: actions/checkout@v2
+      - name: package?
+        run: |
+          which ftp
+          which lftp
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: package?
+        run: |
+          which ftp
+          which lftp
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v2
       - name: package?
         run: |
