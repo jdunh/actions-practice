@@ -45,26 +45,17 @@ jobs:
           for await (const file of globber.globGenerator()) {
             console.log(file)
             if ((await fs.lstat(file)).isDirectory()) continue
-            path.dirname(file).split(path.sep).reduce((prevPath, folder) => {
+              path.dirname(file).split(path.sep).reduce((prevPath, folder) => {
               const currentPath = path.join(prevPath, folder, path.sep);
               dirs.push("mkdir " + path.relative(process.cwd(), currentPath));
               return currentPath;
-            });
-            files.push("put " + path.relative(process.cwd(), file) )
-            uniq_dirs = [...new Set(dirs)];
-            uniq_dirs.sort((a, b) => {
-              return a.length - b.length;
-            });
-            results = uniq_dirs.concat(files)
-            console.log(results)
-            fs.writeFile("#{file_name}.txt", results.join("\\n"), (err) => {})
-#     - name: run file transfers
-#       run: |-
-#         ssh JOELS_TEMP_SSH_SERVER 'mkdir -p goo/foo'
-#         tar -cvf joels_temp_ssh_server-transfer.tar --files-from joels_temp_ssh_server-transfer.txt
-#         scp joels_temp_ssh_server-transfer.tar JOELS_TEMP_SSH_SERVER:
-#         ssh JOELS_TEMP_SSH_SERVER 'tar -xvf joels_temp_ssh_server-transfer.tar -C goo/foo && rm joels_temp_ssh_server-transfer.tar'
-#     - name: run commands over ssh
-#       run: |-
-#         ssh JOELS_TEMP_SSH_SERVER 'echo "Hi from Jenkins $(date)" > remote_server.txt'
-#         ssh JOELS_TEMP_SSH_SERVER 'echo "Hello Again!"'
+          });
+          files.push("put " + path.relative(process.cwd(), file))
+          uniq_dirs = [...new Set(dirs)];
+          uniq_dirs.sort((a, b) => {
+            return a.length - b.length;
+          });
+          results = uniq_dirs.concat(files)
+          console.log(results)
+          fs.writeFile("#{file_name}.txt", results.join("\\n"), (err) => { })
+          }
