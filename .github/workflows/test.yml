@@ -43,11 +43,12 @@ jobs:
           const files = []
           const dirs = []
           for await (const file of globber.globGenerator()) {
+            file = path.relative(process.cwd(), file)
             console.log(file)
             if ((await fs.lstat(file)).isDirectory()) continue
               path.dirname(file).split(path.sep).reduce((prevPath, folder) => {
               const currentPath = path.join(prevPath, folder, path.sep);
-              dirs.push("mkdir " + path.relative(process.cwd(), currentPath));
+              dirs.push("mkdir " + currentPath);
               return currentPath;
           });
           files.push("put " + path.relative(process.cwd(), file))
