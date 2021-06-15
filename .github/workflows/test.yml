@@ -43,6 +43,7 @@ jobs:
           const files = []
           const dirs = []
           for await (const file of globber.globGenerator()) {
+              console.log(file)
               if ((await fs.lstat(file)).isDirectory()) {
                   file.split(path.sep).reduce((prevPath, folder) => {
                     const currentPath = path.join(prevPath, folder, path.sep);
