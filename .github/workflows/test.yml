@@ -51,7 +51,7 @@ jobs:
               dirs.push("mkdir " + currentPath);
               return currentPath;
           });
-          files.push("put " + path.relative(process.cwd(), file))
+          files.push("put " + file)
           uniq_dirs = [...new Set(dirs)];
           uniq_dirs.sort((a, b) => {
             return a.length - b.length;
