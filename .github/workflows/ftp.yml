@@ -22,7 +22,7 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "new1.txt"
+          const patterns = "**/**.txt"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           const dirs = []
@@ -46,6 +46,7 @@ jobs:
           var results = [
             "open ${{ secrets.JD_FTP_SERVER_HOST }}",
             "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
+            "mkdir ${{ env.REMOTE_DIRECTORY }}",
             "cd ${{ env.REMOTE_DIRECTORY }}"
           ]
           results = results.concat(uniq_dirs.concat(files))
