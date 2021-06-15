@@ -48,7 +48,7 @@ jobs:
             if ((await fs.lstat(file)).isDirectory()) continue
               path.dirname(file).split(path.sep).reduce((prevPath, folder) => {
               const currentPath = path.join(prevPath, folder, path.sep);
-              dirs.push("mkdir " + path.normalize(currentPath);
+              dirs.push("mkdir " + path.normalize(currentPath));
               return currentPath;
           }, '');
           files.push("put " + file)
