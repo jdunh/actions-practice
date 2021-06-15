@@ -52,7 +52,7 @@ jobs:
                 dirs.push("mkdir " + currentPath);
               }
               return currentPath;
-          }, '');
+          }, '')}
           files.push("put " + file)
           uniq_dirs = [...new Set(dirs)];
           uniq_dirs.sort((a, b) => {
@@ -61,4 +61,3 @@ jobs:
           results = uniq_dirs.concat(files)
           console.log(results)
           fs.writeFile("#{file_name}.txt", results.join("\\n"), (err) => { })
-          }
