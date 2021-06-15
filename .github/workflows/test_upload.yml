@@ -18,9 +18,10 @@ jobs:
         echo "{}" > new/test/bar.json
         ls new/test
     - uses: actions/upload-artifact@v2
-      with:
-        name: my-artifact
+      with: 
+        name: ${{ env.NAME }}
         path: ${{ github.workspace }}
-
+      env:
+        NAME: test
 
 
