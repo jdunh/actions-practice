@@ -48,7 +48,7 @@ jobs:
             "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
             "cd ${{ env.REMOTE_DIRECTORY }}"
           ]
-          results = result.concat(uniq_dirs.concat(files))
+          results = results.concat(uniq_dirs.concat(files))
           fs.writeFile("JD_FTP_SERVER_transfer.txt", results.join("\n"), (err) => { })
       env:
         REMOTE_DIRECTORY: UPDATE_ME
