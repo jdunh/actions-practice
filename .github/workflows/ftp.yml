@@ -26,7 +26,7 @@ jobs:
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           const dirs = []
-          const exludes = ['./', '.\']
+          const exludes = ['./', '.\\']
           for await (let file of globber.globGenerator()) {
             file = path.relative(process.cwd(), file)
             if ((await fs.lstat(file)).isDirectory()) continue
@@ -44,9 +44,9 @@ jobs:
             return a.length - b.length;
           });
           var results = [
-            "open 18.208.149.171 21",
-            "user ftp_me ftpfunishere",
-            "cd new"
+            "open ${{ secrets.JD_FTP_SERVER_HOST }}",
+            "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
+            "cd ${{ env.REMOTE_DIRECTORY }}"
           ]
           results = result.concat(uniq_dirs.concat(files))
           fs.writeFile("JD_FTP_SERVER_transfer.txt", results.join("\n"), (err) => { })
