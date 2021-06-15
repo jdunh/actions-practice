@@ -38,15 +38,27 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "*.txt,new/test/*.json"
-          const globber = await glob.create(patterns.replace(",", "\n"))
+          const patterns = "#{patterns}"
+          const globber = await glob.create(patterns.replace(",", "\\n"))
           const files = []
+          const dirs = []
           for await (const file of globber.globGenerator()) {
-              if ((await fs.lstat(file)).isDirectory()) continue
-              files.push(path.relative(process.cwd(), file))
-          }
-          console.log(files)
-          fs.writeFile("joels_temp_ssh_server-transfer.txt", files.join("\n"), (err) => {})
+              if ((await fs.lstat(file)).isDirectory()) {
+                  file.split(path.sep).reduce((prevPath, folder) => {
+                    const currentPath = path.join(prevPath, folder, path.sep);
+                    dirs.push("mkdir " + path.relative(process.cwd(), currentPath));
+                    return currentPath;
+                  });
+              } else {
+                files.push("put " + path.relative(process.cwd(), file) )
+              }}
+              uniq_dirs = [...new Set(dirs)];
+              uniq_dirs.sort((a, b) => {
+                return a.length - b.length;
+              });
+              results = uniq_dirs.concat(files)
+              console.log(results)
+              fs.writeFile("#{file_name}.txt", results.join("\\n"), (err) => {})
 #     - name: run file transfers
 #       run: |-
 #         ssh JOELS_TEMP_SSH_SERVER 'mkdir -p goo/foo'
