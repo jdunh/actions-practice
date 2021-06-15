@@ -22,11 +22,11 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "**/**.txt"
+          const patterns = "new1.txt"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           const dirs = []
-          const exludes = ['./', '.\\']
+          const exludes = ['./', '.\']
           for await (let file of globber.globGenerator()) {
             file = path.relative(process.cwd(), file)
             if ((await fs.lstat(file)).isDirectory()) continue
@@ -52,6 +52,8 @@ jobs:
           results = results.concat(uniq_dirs.concat(files))
           fs.writeFile("JD_FTP_SERVER_transfer.txt", results.join("\n"), (err) => { })
       env:
-        REMOTE_DIRECTORY: goo
+        REMOTE_DIRECTORY: UPDATE_ME
     - name: run file transfers
-      run: ftp -pvn < JD_FTP_SERVER_transfer.txt
+      run:
+      - ftp -pvn < JD_FTP_SERVER_transfer.txt
+      - rm JD_FTP_SERVER_transfer.txt
