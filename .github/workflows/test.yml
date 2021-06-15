@@ -42,12 +42,15 @@ jobs:
           const globber = await glob.create(patterns.replace(",", "\\n"))
           const files = []
           const dirs = []
+          const exludes = ['./', '.\\']
           for await (let file of globber.globGenerator()) {
             file = path.relative(process.cwd(), file)
             if ((await fs.lstat(file)).isDirectory()) continue
               path.dirname(file).split(path.sep).reduce((prevPath, folder) => {
               const currentPath = path.join(prevPath, folder, path.sep);
-              dirs.push("mkdir " + currentPath);
+              if !exludes.includes(e) {
+                dirs.push("mkdir " + currentPath);
+              }
               return currentPath;
           }, '');
           files.push("put " + file)
