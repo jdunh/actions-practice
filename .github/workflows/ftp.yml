@@ -54,4 +54,5 @@ jobs:
       env:
         REMOTE_DIRECTORY: "UPDATE_ME_${{ github.run_id }}"
     - name: run file transfers
+      shell: bash
       run: ftp -pvn < JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
