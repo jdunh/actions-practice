@@ -45,7 +45,8 @@ jobs:
           });
           var results = [
             "open ${{ secrets.JD_FTP_SERVER_HOST }}",
-            "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
+            "USER ${{ secrets.JD_FTP_SERVER_USER }}",
+            "PASS ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
             "mkdir ${{ env.REMOTE_DIRECTORY }}",
             "cd ${{ env.REMOTE_DIRECTORY }}"
           ]
