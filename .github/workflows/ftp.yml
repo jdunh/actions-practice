@@ -44,9 +44,9 @@ jobs:
             return a.length - b.length;
           });
           var results = [
-            "open ${{ secrets.JD_FTP_SERVER_HOST }} 21",
-            "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
-            "cd ${{ env.REMOTE_DIRECTORY }}"
+            "open 18.208.149.171 21",
+            "user ftp_me ftpfunishere",
+            "cd new"
           ]
           results = result.concat(uniq_dirs.concat(files))
           fs.writeFile("JD_FTP_SERVER_transfer.txt", results.join("\n"), (err) => { })
