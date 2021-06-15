@@ -44,9 +44,10 @@ jobs:
             return a.length - b.length;
           });
           var results = [
-            "open ${{ secrets.JD_FTP_SERVER_HOST }} 21",
+            "open ${{ secrets.JD_FTP_SERVER_HOST }}",
             "${{ secrets.JD_FTP_SERVER_USER }}",
             "${{ secrets.JD_FTP_SERVER_PASSWORD }}",
+            "pass",
             "mkdir ${{ env.REMOTE_DIRECTORY }}",
             "cd ${{ env.REMOTE_DIRECTORY }}"
           ]
@@ -56,4 +57,4 @@ jobs:
         REMOTE_DIRECTORY: "UPDATE_ME_${{ github.run_id }}"
     - name: run file transfers
       shell: bash
-      run: ftp -ip -s:JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
+      run: ftp -i -s:JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
