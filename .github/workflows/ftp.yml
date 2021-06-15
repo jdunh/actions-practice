@@ -44,7 +44,7 @@ jobs:
             return a.length - b.length;
           });
           var results = [
-            "open ${{ secrets.JD_FTP_SERVER_HOST }}",
+            "open ${{ secrets.JD_FTP_SERVER_HOST }} 21",
             "${{ secrets.JD_FTP_SERVER_USER }}",
             "${{ secrets.JD_FTP_SERVER_PASSWORD }}",
             "mkdir ${{ env.REMOTE_DIRECTORY }}",
