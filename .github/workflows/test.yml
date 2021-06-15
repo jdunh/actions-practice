@@ -50,7 +50,7 @@ jobs:
               const currentPath = path.join(prevPath, folder, path.sep);
               dirs.push("mkdir " + currentPath);
               return currentPath;
-          });
+          }, '');
           files.push("put " + file)
           uniq_dirs = [...new Set(dirs)];
           uniq_dirs.sort((a, b) => {
