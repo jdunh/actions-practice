@@ -19,9 +19,7 @@ jobs:
         ls new/test
     - uses: actions/upload-artifact@v2
       with: 
-        name: ${{ env.NAME }}
-        path: ${{ github.workspace }}
-      env:
-        NAME: test
+        path: "**/*.txt"
+
 
 
