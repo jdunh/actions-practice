@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on:
-      - windows-latest
+      - ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -22,17 +22,17 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "new1.txt"
+          const patterns = "new1.txt,!**/**.json"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           const dirs = []
-          const exludes = ['./', '.\\']
+          const ignore_dirs = ['./', '.\\']
           for await (let file of globber.globGenerator()) {
             file = path.relative(process.cwd(), file)
             if ((await fs.lstat(file)).isDirectory()) continue
               path.dirname(file).split(path.sep).reduce((prevPath, folder) => {
               const currentPath = path.join(prevPath, folder, path.sep);
-              if (!exludes.includes(currentPath)) {
+              if (!ignore_dirs.includes(currentPath)) {
                 dirs.push("mkdir " + currentPath);
               }
               return currentPath;
@@ -44,15 +44,17 @@ jobs:
             return a.length - b.length;
           });
           var results = [
-            "open ${{ secrets.JD_FTP_SERVER_HOST }}",
+            "open ${{ secrets.JD_FTP_SERVER_HOST }} ${{ env.FTP_PORT }}",
             "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
             "mkdir ${{ env.REMOTE_DIRECTORY }}",
             "cd ${{ env.REMOTE_DIRECTORY }}"
           ]
           results = results.concat(uniq_dirs.concat(files))
           fs.writeFile("JD_FTP_SERVER_transfer.txt", results.join("\n"), (err) => { })
+      if: always()
       env:
-        REMOTE_DIRECTORY: "UPDATE_ME_${{ github.run_id }}"
+        FPT_PORT: 21
+        REMOTE_DIRECTORY: test_1
     - name: run file transfers
-      shell: bash
-      run: ftp -ind -s:JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
+      run: ftp -pvn < JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
+      if: always()
