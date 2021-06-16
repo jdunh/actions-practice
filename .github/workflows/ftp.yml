@@ -27,7 +27,7 @@ jobs:
           const files = []
           const dirs = []
           const ignore_dirs = ['./', '.\\']
-          const isAsciiMode = "false"
+          const isAsciiMode = "true"
           for await (let file of globber.globGenerator()) {
             file = path.relative(process.cwd(), file)
             if ((await fs.lstat(file)).isDirectory()) continue
