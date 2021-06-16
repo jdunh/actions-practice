@@ -23,7 +23,7 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "new1.txt,!**/**.json"
+          const patterns = "**/**.txt,!**/**.json"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           const dirs = []
