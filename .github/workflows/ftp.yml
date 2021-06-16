@@ -27,6 +27,7 @@ jobs:
           const files = []
           const dirs = []
           const ignore_dirs = ['./', '.\\']
+          const isAsciiMode = "false"
           for await (let file of globber.globGenerator()) {
             file = path.relative(process.cwd(), file)
             if ((await fs.lstat(file)).isDirectory()) continue
@@ -43,15 +44,17 @@ jobs:
           uniq_dirs.sort((a, b) => {
             return a.length - b.length;
           });
-          var results = [
+          var ftp_commands = [
             "open ${{ secrets.JD_FTP_SERVER_HOST }} ${{ env.FTP_PORT }}",
             "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
             "mkdir ${{ env.REMOTE_DIRECTORY }}",
-            "cd ${{ env.REMOTE_DIRECTORY }}",
-            "binary"
+            "cd ${{ env.REMOTE_DIRECTORY }}"
           ]
-          results = results.concat(uniq_dirs.concat(files))
-          fs.writeFile("JD_FTP_SERVER_transfer.txt", results.join("\n"), (err) => { })
+          if (isAsciiMode === "false") {
+            ftp_commands.push("binary")
+          }
+          ftp_commands = ftp_commands.concat(uniq_dirs.concat(files))
+          fs.writeFile("JD_FTP_SERVER_transfer.txt", ftp_commands.join("\n"), (err) => { })
       if: always()
       env:
         FPT_PORT: 21
