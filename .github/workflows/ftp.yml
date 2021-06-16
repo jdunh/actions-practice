@@ -14,7 +14,6 @@ jobs:
         echo "${{ github.workflow }}-${{ github.run_id }}" > job.txt
         echo "It Worked!!" > new1.txt
         mkdir -p new/test
-        echo "what" > new/test/goo.txt
         echo "{}" > new/test/bar.json
         ls new/test
     - name: setup ftp transfer file
@@ -23,7 +22,7 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "**/**.txt,!**/**.json"
+          const patterns = "new1.txt,!**/**.json,!**/*~,!**/#*#,!**/.#*,!**/%*%,!**/._*,!**/CVS,!**/CVS/**,!**/.cvsignore,!**/SCCS,!**/SCCS/**,!**/vssver.scc,!**/.svn,!**/.svn/**,!**/.DS_Store,!**/.git,!**/.git/**,!**/.gitattributes,!**/.gitignore,!**/.gitmodules,!**/.hg,!**/.hg/**,!**/.hgignore,!**/.hgsub,!**/.hgsubstate,!**/.hgtags,!**/.bzr,!**/.bzr/**,!**/.bzrignore"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           const dirs = []
@@ -55,7 +54,7 @@ jobs:
       if: always()
       env:
         FPT_PORT: 21
-        REMOTE_DIRECTORY: test_1
+        REMOTE_DIRECTORY: UPDATE_ME
     - name: run file transfers
       run: ftp -pvn < JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
       if: always()
