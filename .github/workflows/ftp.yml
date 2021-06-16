@@ -14,6 +14,7 @@ jobs:
         echo "${{ github.workflow }}-${{ github.run_id }}" > job.txt
         echo "It Worked!!" > new1.txt
         mkdir -p new/test
+        echo "what" > new/test/goo.txt
         echo "{}" > new/test/bar.json
         ls new/test
     - name: setup ftp transfer file
