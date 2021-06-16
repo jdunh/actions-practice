@@ -47,7 +47,8 @@ jobs:
             "open ${{ secrets.JD_FTP_SERVER_HOST }} ${{ env.FTP_PORT }}",
             "user ${{ secrets.JD_FTP_SERVER_USER }} ${{ secrets.JD_FTP_SERVER_PASSWORD }}",
             "mkdir ${{ env.REMOTE_DIRECTORY }}",
-            "cd ${{ env.REMOTE_DIRECTORY }}"
+            "cd ${{ env.REMOTE_DIRECTORY }}",
+            "binary"
           ]
           results = results.concat(uniq_dirs.concat(files))
           fs.writeFile("JD_FTP_SERVER_transfer.txt", results.join("\n"), (err) => { })
