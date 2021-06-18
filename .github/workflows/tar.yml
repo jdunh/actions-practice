@@ -13,6 +13,7 @@ jobs:
       run: |-
         echo "${{ github.workflow }}-${{ github.run_id }}" > job.txt
         echo "testing" > new.txt
+        echo "fun!" > fun.txt
         mkdir -p new/test
         echo "{}" > new/test/bar.json
         ls new/test
