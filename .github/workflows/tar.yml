@@ -1,4 +1,4 @@
-name: ssh test
+name: ssh tar test
 on:
   workflow_dispatch:
 jobs:
@@ -36,7 +36,7 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "*.txt,new/test/*.json,!fun.txt,!**/*~,!**/#*#,!**/.#*,!**/%*%,!**/._*,!**/CVS,!**/CVS/**,!**/.cvsignore,!**/SCCS,!**/SCCS/**,!**/vssver.scc,!**/.svn,!**/.svn/**,!**/.DS_Store,!**/.git,!**/.git/**,!**/.gitattributes,!**/.gitignore,!**/.gitmodules,!**/.hg,!**/.hg/**,!**/.hgignore,!**/.hgsub,!**/.hgsubstate,!**/.hgtags,!**/.bzr,!**/.bzr/**,!**/.bzrignore"
+          const patterns = "*.txt,new/test/*.json,!**/fun.txt,!**/*~,!**/#*#,!**/.#*,!**/%*%,!**/._*,!**/CVS,!**/CVS/**,!**/.cvsignore,!**/SCCS,!**/SCCS/**,!**/vssver.scc,!**/.svn,!**/.svn/**,!**/.DS_Store,!**/.git,!**/.git/**,!**/.gitattributes,!**/.gitignore,!**/.gitmodules,!**/.hg,!**/.hg/**,!**/.hgignore,!**/.hgsub,!**/.hgsubstate,!**/.hgtags,!**/.bzr,!**/.bzr/**,!**/.bzrignore"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           for await (const file of globber.globGenerator()) {
