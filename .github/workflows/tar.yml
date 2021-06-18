@@ -1,7 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: tar test
-
+name: ssh test
 on:
   workflow_dispatch:
 jobs:
@@ -32,13 +29,13 @@ jobs:
             HostName ${{ secrets.SSH_HOST_NAME }}
             User ${{ secrets.SSH_USER }}
             IdentityFile ~/.ssh/id_rsa-joels_temp_ssh_server
-    - name: setup file tranfer file
+    - name: setup file transfer file
       uses: actions/github-script@v3
       with:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "*.txt,new/test/*.json"
+          const patterns = "*.txt,new/test/*.json,!fun.txt,!**/*~,!**/#*#,!**/.#*,!**/%*%,!**/._*,!**/CVS,!**/CVS/**,!**/.cvsignore,!**/SCCS,!**/SCCS/**,!**/vssver.scc,!**/.svn,!**/.svn/**,!**/.DS_Store,!**/.git,!**/.git/**,!**/.gitattributes,!**/.gitignore,!**/.gitmodules,!**/.hg,!**/.hg/**,!**/.hgignore,!**/.hgsub,!**/.hgsubstate,!**/.hgtags,!**/.bzr,!**/.bzr/**,!**/.bzrignore"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           for await (const file of globber.globGenerator()) {
