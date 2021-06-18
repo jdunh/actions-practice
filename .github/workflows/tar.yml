@@ -36,7 +36,7 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "new.txt,fun.txt"
+          const patterns = "**/**.txt,!fun.txt"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           for await (const file of globber.globGenerator()) {
