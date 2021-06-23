@@ -18,8 +18,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: package?
         run: |
-          brew install lftp
-          which lftp
+          which xcodebuild
+          which agvtool
+          which security
+          which PlistBuddy
   ubuntu:
     runs-on: ubuntu-latest
     steps:
