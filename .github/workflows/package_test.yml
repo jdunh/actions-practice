@@ -21,7 +21,7 @@ jobs:
           which xcodebuild
           which agvtool
           which security
-          /usr/lbexec/PlistBuddy
+          /usr/libexec/PlistBuddy
   ubuntu:
     runs-on: ubuntu-latest
     steps:
