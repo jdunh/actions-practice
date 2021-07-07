@@ -2,23 +2,23 @@ name: jdunham-infomagnus/azure_key_vault
 on:
   workflow_dispatch:
 jobs:
-  azure1:
+  azure2:
     runs-on: ubuntu-latest
+    needs: azure1
     steps:
     - uses: Azure/login@v1
       with:
         creds: "${{ secrets.AZURE_CREDENTIALS }}"
     - uses: Azure/get-keyvault-secrets@v1
       with:
-        keyvault: "${{ secrets.AZURE_KEYVAULT }}"
-        secrets: my-secret
+        keyvault: https://valetkvjd.vault.azure.net/
+        secrets: TEST
       id: azure_keyvault
-    - name: set my-secret
-      run: export my-secret="32"
-    - name: set secret envs
+    - name: set job envs
       shell: bash
-      run: echo 'MY_SECRET=$my-secret' >> $GITHUB_ENV
+      run: echo 'MY_SECRET=${{ steps.azure_keyvault.outputs.TEST }}' >> $GITHUB_ENV
     - name: checkout
       uses: actions/checkout@v2
-    - name: echo message
-      run: echo Found $MY_SECRET
+    - name: sh
+      shell: bash
+      run: '"echo $MY_SECRET"'
