@@ -13,11 +13,14 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Run a one-line script
-        run: export TEST=123
-
+        run: | 
+          export TEST=123
+          echo $TEST
+          
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
           echo $NEW
+          echo $TEST
         env:
-          NEW: "$TEST"
+          NEW: $TEST
