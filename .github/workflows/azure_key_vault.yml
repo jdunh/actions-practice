@@ -19,13 +19,14 @@ jobs:
     - uses: Azure/get-keyvault-secrets@v1
       with:
         keyvault: valetkvjd
-        secrets: TEST,TEST2
+        secrets: TEST,TEST2,MYCERT
       id: azure_keyvault
     - name: set job envs
       shell: bash
       run: |-
         echo 'MY_SECRET=${{ steps.azure_keyvault.outputs.TEST }}' >> $GITHUB_ENV
         echo 'MY_SECRET2=${{ steps.azure_keyvault.outputs.TEST2 }}' >> $GITHUB_ENV
+        echo 'MY_CERT=${{ steps.azure_keyvault.outputs.MYCERT }}' >> $GITHUB_ENV
     - name: checkout
       uses: actions/checkout@v2
     - name: sh
@@ -33,3 +34,4 @@ jobs:
       run: |-
         echo $MY_SECRET2
         echo $MY_SECRET
+        echo $MYCERT
