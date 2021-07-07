@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GOO: ${{ steps.set_env.outputs.test }}
+      GOO: "${{ steps.set_env.outputs.test }}"
     steps:
       - uses: actions/checkout@v2
       
