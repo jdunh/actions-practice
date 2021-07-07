@@ -16,7 +16,7 @@ jobs:
         id: set_env
         shell: bash
         run: | 
-          export AZ_ENV = 'yellow'
+          export AZ_ENV='yellow'
           echo "TEST=$AZ_ENV" >> $GITHUB_ENV
           
       # Runs a set of commands using the runners shell
