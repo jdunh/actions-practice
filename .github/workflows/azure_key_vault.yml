@@ -10,8 +10,8 @@ jobs:
         creds: "${{ secrets.AZURE_CREDENTIALS }}"
     - uses: Azure/get-keyvault-secrets@v1
       with:
-        keyvault: "https://valetkvjd.vault.azure.net/"
-        secrets: "TEST"
+        keyvault: valetkvjd
+        secrets: TEST
       id: azure_keyvault
     - name: set job envs
       shell: bash
