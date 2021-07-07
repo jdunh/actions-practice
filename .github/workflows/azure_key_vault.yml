@@ -26,4 +26,5 @@ jobs:
         run: |
           echo $GITHUB_ENV
           echo $TEST
+          echo "${{ steps.set_env.outputs.SELECTED_COLOR }}"
           
