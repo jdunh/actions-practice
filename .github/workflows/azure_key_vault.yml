@@ -1,9 +1,17 @@
-name: jdunham-infomagnus/azure_key_vault
+name: azure_key_vault
 on:
   workflow_dispatch:
 jobs:
-  azure:
+  azure1:
     runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: echo message
+      run: echo Found $my_secret
+  azure2:
+    runs-on: ubuntu-latest
+    needs: azure1
     steps:
     - uses: Azure/login@v1
       with:
@@ -11,13 +19,17 @@ jobs:
     - uses: Azure/get-keyvault-secrets@v1
       with:
         keyvault: valetkvjd
-        secrets: TEST
+        secrets: TEST,TEST2
       id: azure_keyvault
     - name: set job envs
       shell: bash
-      run: echo 'MY_SECRET=${{ steps.azure_keyvault.outputs.TEST }}' >> $GITHUB_ENV
+      run: |-
+        echo 'MY_SECRET=${{ steps.azure_keyvault.outputs.TEST }}' >> $GITHUB_ENV
+        echo 'MY_SECRET2=${{ steps.azure_keyvault.outputs.TEST2 }}' >> $GITHUB_ENV
     - name: checkout
       uses: actions/checkout@v2
     - name: sh
       shell: bash
-      run: echo $MY_SECRET
+      run: |-
+        echo $MY_SECRET2
+        echo $MY_SECRET
