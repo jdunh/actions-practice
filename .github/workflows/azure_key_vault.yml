@@ -35,3 +35,6 @@ jobs:
         echo $MY_SECRET2
         echo $MY_SECRET
         echo $MYCERT
+        echo $TEST
+        echo $FOO
+        echo TEST2
