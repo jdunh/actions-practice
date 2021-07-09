@@ -19,4 +19,4 @@ jobs:
         mkdir -p /mnt/cifs_share/
         rsync -a --include='*/' --include='**/*.txt' --exclude='*' ./ /mnt/cifs_share/
       env:
-        JD_SHARE_DIR: /cifs_share
+        JD_SHARE_DIR: cifs_share
