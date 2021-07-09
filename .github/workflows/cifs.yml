@@ -26,5 +26,5 @@ jobs:
           sudo chmod 777 /mnt/test
           sudo mount -t cifs -o user=devdocsuser,password=devdocs //3.87.53.145/devdocs /mnt/test/
           cd /mnt/test
-          touch test.txt
+          sudo touch test.txt
           ls
