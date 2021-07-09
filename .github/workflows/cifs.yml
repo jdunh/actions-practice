@@ -23,8 +23,8 @@ jobs:
         run: |
           # sudo apt install samba-client cifs-utils -y
           sudo mkdir /mnt/test
-          sudo chmod 777 /mnt/test          
-          sudo mount -t cifs -o user=devdocsuser,password=devdocs //3.87.53.145/devdocs /mnt/test
+          sudo chmod 777 /mnt/test
+          sudo mount -t cifs -o user=devdocsuser,password=devdocs //3.87.53.145/devdocs /mnt/test/
           cd /mnt/test
           touch test.txt
           ls
