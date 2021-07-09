@@ -21,8 +21,8 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          mkdir /mnt/test
-          chmod 777 /mnt/test
+          sudo mkdir /mnt/test
+          sudo chmod 777 /mnt/test
           mount -t cifs -o user=jenkins,password=ruby!sC00l //3.237.197.235/cifs_share /mnt/test/
           cd /mnt/test
           sudo touch github.txt
