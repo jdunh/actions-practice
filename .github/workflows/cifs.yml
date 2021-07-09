@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo mkdir /mnt/test
           sudo chmod 777 /mnt/test
-          sudo mount -t cifs -o user=devdocsuser,password=devdocs //3.237.197.235/devdocs /mnt/test/
+          sudo mount -t cifs -o user=devdocsuser,password=devdocs //3.237.197.235/cifs_share /mnt/test/
           cd /mnt/test
           sudo touch github.txt
           ls
