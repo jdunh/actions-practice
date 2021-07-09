@@ -16,7 +16,7 @@ jobs:
         sudo mkdir /mnt/cifs_share
         sudo chmod 777 /mnt/cifs_share
         sudo mount -t cifs -o username=jenkins,password=ruby!sC00l //3.237.197.235/${{ env.JD_SHARE_DIR }} /mnt/cifs_share
-        mkdir -p /mnt/cifs_share/
-        rsync -a --include='*/' --include='**/*.txt' --exclude='*' ./ /mnt/cifs_share/
+        sudo mkdir -p /mnt/cifs_share/
+        sudo rsync -a --include='*/' --include='**/*.txt' --exclude='*' ./ /mnt/cifs_share/
       env:
         JD_SHARE_DIR: cifs_share
