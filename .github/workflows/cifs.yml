@@ -8,14 +8,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: run command
-      shell: bash
-      run: |-
-        mkdir -p test
-        mkdir -p test2
-        echo "don't copy me" >> ./test/dont_copy.txt
-        echo "copy me" >> ./test2/copy_me.txt
-        echo "testing" >> server_test.txt
     - name: transfer files over CIFS
       run: |-
         sudo mkdir -p /mnt/cifs_share
