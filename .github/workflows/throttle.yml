@@ -1,0 +1,16 @@
+name: jdunham-infomagnus/throttle_pipeline
+on:
+  workflow_dispatch:
+concurrency:
+  group: "${{ env.GITHUB_WORKFLOW }}"
+jobs:
+  sleep:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: sh
+      shell: bash
+      run: sleep 100
+    - name: echo message
+      run: echo Done
