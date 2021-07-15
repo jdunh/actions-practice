@@ -2,7 +2,7 @@ name: jdunham-infomagnus/throttle_pipeline
 on:
   workflow_dispatch:
 concurrency:
-  group: test
+  group: ${{ github.workflow }}
 jobs:
   sleep:
     runs-on: ubuntu-latest
