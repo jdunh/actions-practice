@@ -1,16 +1,13 @@
-name: jdunham-infomagnus/throttle_pipeline
+name: jdunham-infomagnus/throttle_designer
 on:
   workflow_dispatch:
 concurrency:
-  group: ${{ github.workflow }}
+  # Note: 'concurrency' may not be supported on enterprise versions
+  group: "${{ github.workflow }}"
 jobs:
-  sleep:
-    runs-on: ubuntu-latest
+  build:
+    runs-on:
+      - ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: sh
-      shell: bash
-      run: sleep 100
-    - name: echo message
-      run: echo Done
