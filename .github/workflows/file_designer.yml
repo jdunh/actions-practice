@@ -36,5 +36,3 @@ jobs:
       shell: bash
       run: |-
         ls new
-        ls .
-        cat created.txt
