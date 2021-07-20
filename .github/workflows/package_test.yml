@@ -1,5 +1,5 @@
 
-name: Package Test
+name: Package Tests
 
 on:
   workflow_dispatch:
