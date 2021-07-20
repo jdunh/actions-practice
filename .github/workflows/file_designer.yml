@@ -18,7 +18,7 @@ jobs:
     - uses: actions/github-script@v3
       env:
         TARGET_LOCATION: "./new"
-        FILE_PATTERNS: "**/**.txt,**/**.yml,!**/**.js"
+        FILE_PATTERNS: "**/**.yml,**/**.txt,!**/**.js"
       with:
         script: |-
           const fs = require('fs').promises
