@@ -1,4 +1,4 @@
-name: file_designer
+name: jdunham-infomagnus/file_designer
 on:
   workflow_dispatch:
 jobs:
@@ -28,7 +28,7 @@ jobs:
           const globber = await glob.create(patterns.replace(",", "\n"))
           for await (const file of globber.globGenerator()) {
             if ((await fs.lstat(file)).isDirectory()) continue
-            const dest = path.join(target, file.substring(process.cwd().length)
+            const dest = path.join(target, file.substring(process.cwd().length))
             await io.mkdirP(path.dirname(dest))
             await io.cp(file, dest)
           }
