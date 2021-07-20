@@ -25,7 +25,7 @@ jobs:
           const path = require('path')
           const target = path.resolve(process.env.TARGET_LOCATION)
           const patterns = process.env.FILE_PATTERNS
-          const globber = await glob.create(patterns.replaceAll(",", "\n"))
+          const globber = await glob.create(patterns.replace1(/,/g, "\n"))
           for await (const file of globber.globGenerator()) {
             if ((await fs.lstat(file)).isDirectory()) continue
             const dest = path.join(target, file.substring(process.cwd().length))
@@ -37,6 +37,9 @@ jobs:
       run: |-
         ls -la new
         ls -la new/.github/actions/cat-facts
+    - name: join file
+      shell: bash
+      run: cat created.txt >> new/created.txt
     - uses: actions/github-script@v3
       env:
         FILE_PATTERNS: "**/**.txt,!**/**.yaml"
@@ -55,3 +58,4 @@ jobs:
       run: |-
         ls -la new
         ls -la new/.github/actions/cat-facts
+        cat new/created.txt
