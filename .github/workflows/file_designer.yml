@@ -37,22 +37,10 @@ jobs:
       run: |-
         ls -la new
         ls -la new/.github/actions/cat-facts
+        cat new/created.txt
     - name: join file
       shell: bash
       run: cat created.txt >> new/created.txt
-    - uses: actions/github-script@v3
-      env:
-        FILE_PATTERNS: "**/**.txt,!**/**.yaml"
-      with:
-        script: |-
-          const fs = require('fs').promises
-          const path = require('path')
-          const patterns = process.env.FILE_PATTERNS
-          const globber = await glob.create(patterns.replace(",", "\n"))
-          for await (const file of globber.globGenerator()) {
-            if ((await fs.lstat(file)).isDirectory()) continue
-            await io.rmRF(file)
-          }
     - name: test after
       shell: bash
       run: |-
