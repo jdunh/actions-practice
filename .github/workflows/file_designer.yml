@@ -1,0 +1,34 @@
+name: file_designer
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: create file
+      shell: bash
+      run: |-
+        echo 'Hello world!
+        blah
+        blah
+        faslkdfj' > created.txt
+    - uses: actions/github-script@v3
+      env:
+        TARGET_LOCATION: "./new"
+        FILE_PATTERNS: "**/**.txt,!**/**.js"
+      with:
+        script: |-
+          const fs = require('fs').promises
+          const path = require('path')
+          const target = path.resolve(process.env.TARGET_LOCATION)
+          const patterns = process.env.TARGET_LOCATION
+          const globber = await glob.create(patterns.replace(",", "\n"))
+          for await (const file of globber.globGenerator()) {
+            if ((await fs.lstat(file)).isDirectory()) continue
+            const dest = path.join(target, file.substring(process.cwd().length)
+            await io.mkdirP(path.dirname(dest))
+            await io.cp(file, dest)
+          }
