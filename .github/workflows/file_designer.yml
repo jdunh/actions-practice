@@ -35,4 +35,5 @@ jobs:
     - name: test it
       shell: bash
       run: |-
-        ls new
+        ls -la new
+        ls -la new/.github/actions/cat-facts
