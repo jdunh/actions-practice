@@ -31,4 +31,11 @@ jobs:
             const dest = path.join(target, file.substring(process.cwd().length))
             await io.mkdirP(path.dirname(dest))
             await io.cp(file, dest)
+            console.log(dest)
           }
+    - name: create file
+      shell: bash
+      run: |-
+        ls new
+        ls .
+        cat created.txt
