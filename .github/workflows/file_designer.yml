@@ -32,7 +32,25 @@ jobs:
             await io.mkdirP(path.dirname(dest))
             await io.cp(file, dest)
           }
-    - name: test it
+    - name: test before
+      shell: bash
+      run: |-
+        ls -la new
+        ls -la new/.github/actions/cat-facts
+    - uses: actions/github-script@v3
+      env:
+        FILE_PATTERNS: "**/**.txt,!**/**.yaml"
+      with:
+        script: |-
+          const fs = require('fs').promises
+          const path = require('path')
+          const patterns = process.env.FILE_PATTERNS
+          const globber = await glob.create(patterns.replace(",", "\n"))
+          for await (const file of globber.globGenerator()) {
+            if ((await fs.lstat(file)).isDirectory()) continue
+            await io.rmRF(file)
+          }
+    - name: test after
       shell: bash
       run: |-
         ls -la new
