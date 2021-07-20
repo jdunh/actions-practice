@@ -43,10 +43,10 @@ jobs:
       run: cat created.txt >> new/created.txt
     - name: move file
       shell: bash
-      run: mv new/created.txt new/.github/actions/cat-facts
+      run: mv new/created.txt new/.github/actions/cat-facts/moved.txt
     - name: test after
       shell: bash
       run: |-
         ls -la new
         ls -la new/.github/actions/cat-facts
-        cat new/created.txt
+        cat new/.github/actions/cat-facts/moved.txt
