@@ -41,6 +41,9 @@ jobs:
     - name: join file
       shell: bash
       run: cat created.txt >> new/created.txt
+    - name: move file
+      shell: bash
+      run: mv new/created.txt new/.github/actions/cat-facts
     - name: test after
       shell: bash
       run: |-
