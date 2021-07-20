@@ -12,21 +12,39 @@ jobs:
       - name: package?
         shell: bash
         run: |
-          which rsync
-          which mount
+          which cp
+          which mv
+          which mkdir
+          which unzip
+          which echo
+          which tar
+          which zip
+          which curl
   macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: package?
         run: |
-          which rsync
-          which mount
+          which cp
+          which mv
+          which mkdir
+          which unzip
+          which echo
+          which tar
+          which zip
+          which curl
   ubuntu:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: package?
         run: |
-          which rsync
-          which mount
+          which cp
+          which mv
+          which mkdir
+          which unzip
+          which echo
+          which tar
+          which zip
+          which curl
