@@ -18,8 +18,9 @@ jobs:
           which unzip
           which echo
           which tar
-          which zip
           which curl
+          which zip
+
   macos:
     runs-on: macos-latest
     steps:
