@@ -59,9 +59,9 @@ jobs:
         mkdir -p foo/goo/zoo
         echo 'testing is fun...' > foo/goo/zoo/test.txt
         tree .
-    - name: delete folder
+    - name: rename/move folder
       shell: bash
-      run: rm -rf foo/goo
+      run: mv foo/goo foo/goo2
     - name: test after
       shell: bash
       run: |-
