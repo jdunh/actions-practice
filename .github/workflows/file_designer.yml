@@ -20,7 +20,7 @@ jobs:
       env:
         TARGET_LOCATION: "./new"
         FILE_PATTERNS: "**/**.txt,**/**.yml,!**/**.js"
-        FLATTEN: 'true'
+        FLATTEN: 'false'
       with:
         script: |-
           const fs = require('fs').promises
