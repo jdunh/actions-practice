@@ -42,7 +42,7 @@ jobs:
         tree
 #         ls -la new
 #         ls -la new/.github/actions/cat-facts
-        cat new/created.txt
+#         cat new/created.txt
     - name: join file
       shell: bash
       run: cat created.txt >> new/created.txt
