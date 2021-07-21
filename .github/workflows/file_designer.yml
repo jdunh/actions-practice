@@ -50,6 +50,9 @@ jobs:
       run: |-
         mkdir -p test/more_new
         cp -r new/* test/more_new
+    - name: create folder
+      shell: bash
+      run: mkdir -p foo/goo/zoo
     - name: test after
       shell: bash
       run: |-
