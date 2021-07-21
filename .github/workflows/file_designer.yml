@@ -78,4 +78,4 @@ jobs:
       shell: bash
       run: |-
         ls -la new
-        ls -la my_zip/dir
+        ls -la my_zip/dir1
