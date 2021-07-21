@@ -35,7 +35,7 @@ jobs:
             const dest = path.join(target, filename)
             await io.mkdirP(path.dirname(dest))
             await io.cp(file, dest)
-         }
+          }
     - name: test before
       shell: bash
       run: |-
