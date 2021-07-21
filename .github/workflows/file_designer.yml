@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on:
-      - ubuntu-latest
+      - macos-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -35,10 +35,9 @@ jobs:
     - name: test before
       shell: bash
       run: |-
-        tree .
-#         ls -la new
-#         ls -la new/.github/actions/cat-facts
-#         cat new/created.txt
+        ls -la new
+        ls -la new/.github/actions/cat-facts
+        cat new/created.txt
 #     - name: join file
 #       shell: bash
 #       run: cat created.txt >> new/created.txt
@@ -76,7 +75,4 @@ jobs:
     - name: test after
       shell: bash
       run: |-
-        tree .
-#         ls -la new
-#         ls -la new/.github/actions/cat-facts
-#         cat new/.github/actions/cat-facts/moved.txt
+        ls -la new
