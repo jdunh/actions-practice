@@ -15,23 +15,26 @@ jobs:
         blah
         blah
         faslkdfj' > created.txt
-    - uses: actions/github-script@v3
+    - name: copy files
+      uses: actions/github-script@v3
       env:
         TARGET_LOCATION: "./new"
-        FILE_PATTERNS: "**/**.yml,**/**.txt,!**/**.js"
+        FILE_PATTERNS: "**/**.txt,**/**.yml,!**/**.js"
+        FLATTEN: 'false'
       with:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
           const target = path.resolve(process.env.TARGET_LOCATION)
           const patterns = process.env.FILE_PATTERNS
+          const flatten = process.env.FLATTEN === 'true'
           const globber = await glob.create(patterns.replace(/,/g, "\n"))
           for await (const file of globber.globGenerator()) {
             if ((await fs.lstat(file)).isDirectory()) continue
-            const dest = path.join(target, file.substring(process.cwd().length))
+            const filename = flatten ? path.basename(file) : file.substring(process.cwd().length)
+            const dest = path.join(target, filename)
             await io.mkdirP(path.dirname(dest))
             await io.cp(file, dest)
-          }
     - name: test before
       shell: bash
       run: |-
