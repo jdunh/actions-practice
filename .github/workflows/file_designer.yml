@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on:
-      - windows-latest
+      - ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -77,5 +77,6 @@ jobs:
     - name: test after
       shell: bash
       run: |-
-        ls -la new
-        ls -la my_zip/dir1
+        tree
+#         ls -la new
+#         ls -la my_zip/dir1
