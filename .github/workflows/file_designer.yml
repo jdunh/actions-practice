@@ -39,7 +39,7 @@ jobs:
     - name: test before
       shell: bash
       run: |-
-        tree
+        tree -a
 #         ls -la new
 #         ls -la new/.github/actions/cat-facts
 #         cat new/created.txt
@@ -85,6 +85,6 @@ jobs:
     - name: test after
       shell: bash
       run: |-
-        tree
+        tree -a
 #         ls -la new
 #         ls -la my_zip/dir1
