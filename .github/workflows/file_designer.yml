@@ -53,6 +53,15 @@ jobs:
     - name: create folder
       shell: bash
       run: mkdir -p foo/goo/zoo
+    - name: create file
+      shell: bash
+      run: |-
+        mkdir -p foo/goo/zoo
+        echo 'testing is fun...' > foo/goo/zoo/test.txt
+        tree .
+    - name: delete folder
+      shell: bash
+      run: rm -rf foo/goo
     - name: test after
       shell: bash
       run: |-
