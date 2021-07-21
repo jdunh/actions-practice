@@ -74,6 +74,9 @@ jobs:
     - name: zip folder
       shell: bash
       run: 7z a my_zip/dir1/goo.zip foo/goo2
+    - name: unzip folder
+      shell: bash
+      run: unzip -d output my_zip/dir1/goo.zip
     - name: test after
       shell: bash
       run: |-
