@@ -53,6 +53,8 @@ jobs:
     - name: test after
       shell: bash
       run: |-
-        ls -la new
-        ls -la new/.github/actions/cat-facts
-        cat new/.github/actions/cat-facts/moved.txt
+        ls -la
+        ls -la test/more_new
+#         ls -la new
+#         ls -la new/.github/actions/cat-facts
+#         cat new/.github/actions/cat-facts/moved.txt
