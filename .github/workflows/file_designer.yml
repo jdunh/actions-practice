@@ -73,7 +73,7 @@ jobs:
         tar zxf playground.tar -C new
     - name: zip folder
       shell: bash
-      run: 7z -rf my_zip/dir1/goo.zip foo/goo
+      run: 7z a my_zip/dir1/goo.zip foo/goo
     - name: test after
       shell: bash
       run: |-
