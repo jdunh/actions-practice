@@ -35,15 +35,21 @@ jobs:
     - name: test before
       shell: bash
       run: |-
-        ls -la new
-        ls -la new/.github/actions/cat-facts
-        cat new/created.txt
-    - name: join file
+        ls
+#         ls -la new
+#         ls -la new/.github/actions/cat-facts
+#         cat new/created.txt
+#     - name: join file
+#       shell: bash
+#       run: cat created.txt >> new/created.txt
+#     - name: move file
+#       shell: bash
+#       run: mv new/created.txt new/.github/actions/cat-facts/moved.txt
+    - name: copy folder
       shell: bash
-      run: cat created.txt >> new/created.txt
-    - name: move file
-      shell: bash
-      run: mv new/created.txt new/.github/actions/cat-facts/moved.txt
+      run: |-
+        mkdir -p test/more_new
+        cp -r new test/more_new
     - name: test after
       shell: bash
       run: |-
