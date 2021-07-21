@@ -20,7 +20,7 @@ jobs:
       env:
         TARGET_LOCATION: "./new"
         FILE_PATTERNS: "**/**.txt,**/**.yml,!**/**.js"
-        FLATTEN: 'false'
+        FLATTEN: 'true'
       with:
         script: |-
           const fs = require('fs').promises
@@ -39,7 +39,7 @@ jobs:
     - name: test before
       shell: bash
       run: |-
-        tree -a
+        tree -a new
 #         ls -la new
 #         ls -la new/.github/actions/cat-facts
 #         cat new/created.txt
