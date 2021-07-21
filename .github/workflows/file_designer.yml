@@ -39,8 +39,9 @@ jobs:
     - name: test before
       shell: bash
       run: |-
-        ls -la new
-        ls -la new/.github/actions/cat-facts
+        tree
+#         ls -la new
+#         ls -la new/.github/actions/cat-facts
         cat new/created.txt
     - name: join file
       shell: bash
