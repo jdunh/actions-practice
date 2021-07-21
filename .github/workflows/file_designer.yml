@@ -38,12 +38,12 @@ jobs:
         ls -la new
         ls -la new/.github/actions/cat-facts
         cat new/created.txt
-#     - name: join file
-#       shell: bash
-#       run: cat created.txt >> new/created.txt
-#     - name: move file
-#       shell: bash
-#       run: mv new/created.txt new/.github/actions/cat-facts/moved.txt
+    - name: join file
+      shell: bash
+      run: cat created.txt >> new/created.txt
+    - name: move file
+      shell: bash
+      run: mv new/created.txt new/.github/actions/cat-facts/moved.txt
     - name: copy folder
       shell: bash
       run: |-
@@ -57,7 +57,6 @@ jobs:
       run: |-
         mkdir -p foo/goo/zoo
         echo 'testing is fun...' > foo/goo/zoo/test.txt
-        tree .
     - name: rename/move folder
       shell: bash
       run: mv foo/goo foo/goo2
