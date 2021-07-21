@@ -18,7 +18,7 @@ jobs:
           which echo
           which tar
           which curl
-          which zip
+          which tree
 
   macos:
     runs-on: macos-latest
@@ -34,6 +34,7 @@ jobs:
           which tar
           which zip
           which curl
+          which tree
   ubuntu:
     runs-on: ubuntu-latest
     steps:
@@ -48,3 +49,4 @@ jobs:
           which tar
           which zip
           which curl
+          which tree
