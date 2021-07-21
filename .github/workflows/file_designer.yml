@@ -62,18 +62,17 @@ jobs:
     - name: rename/move folder
       shell: bash
       run: mv foo/goo foo/goo2
-      
     - name: run command
       shell: bash
       run: |-
         mkdir -p playground
         touch playground/my_file.txt
-        tar cf playground.tar playground
+        tar zcf playground.tar playground
     - name: untar archive
       shell: bash
       run: |-
         mkdir -p new
-        tar xf playground.tar -C new
+        tar zxf playground.tar -C new
     - name: test after
       shell: bash
       run: |-
