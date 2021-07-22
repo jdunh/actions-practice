@@ -87,8 +87,10 @@ jobs:
         tar zxf playground.tar -C new
     - name: zip folder
       shell: bash
-      run: 7z a my_zip/dir1/goo.zip ./foo/goo/*
+      run: 7z a my_zip/dir1/goo2.zip ./foo/goo2/*
     - name: unzip folder
       shell: bash
       run: unzip -d output my_zip/dir1/goo.zip
-#     # 'sp.sd.fileoperations.FileTransformOperation' was not transformed because there is no suitable equivalent in GitHub Actions
+    - name: post mortem
+      shell: bash
+      run: tree -a
