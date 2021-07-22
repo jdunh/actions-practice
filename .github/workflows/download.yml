@@ -1,0 +1,16 @@
+name: jdunham-infomagnus/file_download
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: create folder
+      shell: bash
+      run: mkdir -p downloads
+    - name: download file
+      shell: bash
+      run: curl https://www.digitalocean.com/robots.txt --output downloads/test.txt
