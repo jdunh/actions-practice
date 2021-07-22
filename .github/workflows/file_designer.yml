@@ -16,6 +16,10 @@ jobs:
         name=foo
         num=1
         EOL
+    - name: test file
+      shell: bash
+      run: |-
+        cat created.txt
     - name: copy files
       uses: actions/github-script@v3
       env:
