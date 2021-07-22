@@ -4,16 +4,18 @@ on:
 jobs:
   build:
     runs-on:
-      - macos-latest
+      - ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
     - name: create file
       shell: bash
       run: |-
-        echo 'testing=true
+        cat > created.txt <<'EOL'
+        testing=true
         name=foo
-        num=1' > created.txt
+        num=1
+        EOL
     - name: copy files
       uses: actions/github-script@v3
       env:
@@ -47,7 +49,13 @@ jobs:
       shell: bash
       run: |-
         mkdir -p foo/goo/zoo
-        echo 'testing is fun...' > foo/goo/zoo/test.txt
+        cat > foo/goo/zoo/test.txt <<'EOL'
+        testing is fun...
+        EOL
+    - name: test file
+      shell: bash
+      run: |-
+        cat foo/goo/zoo/test.txt
     - name: delete files
       uses: actions/github-script@v3
       env:
