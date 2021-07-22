@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on:
-      - ubuntu-latest
+      - windows-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -93,4 +93,9 @@ jobs:
       run: unzip -d output my_zip/dir1/goo2.zip
     - name: post mortem
       shell: bash
-      run: tree -a
+      run: |-
+        ls -la
+        ls output
+        ls foo/goo2/zoo
+        ls my_zip/dir1
+        # tree -a
