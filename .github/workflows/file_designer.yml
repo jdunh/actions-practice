@@ -90,7 +90,7 @@ jobs:
       run: 7z a my_zip/dir1/goo2.zip ./foo/goo2/*
     - name: unzip folder
       shell: bash
-      run: unzip -d output my_zip/dir1/goo.zip
+      run: unzip -d output my_zip/dir1/goo2.zip
     - name: post mortem
       shell: bash
       run: tree -a
