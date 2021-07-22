@@ -11,16 +11,15 @@ jobs:
     - name: create file
       shell: bash
       run: |-
-        echo 'Hello world!
-        blah
-        blah
-        faslkdfj' > created.txt
+        echo 'testing=true
+        name=foo
+        num=1' > created.txt
     - name: copy files
       uses: actions/github-script@v3
       env:
         TARGET_LOCATION: "./new"
-        FILE_PATTERNS: "**/**.txt,**/**.yml,!**/**.js"
-        FLATTEN: 'false'
+        FILE_PATTERNS: "**/**.txt,!**/**.js"
+        FLATTEN: 'true'
       with:
         script: |-
           const fs = require('fs').promises
@@ -36,24 +35,11 @@ jobs:
             await io.mkdirP(path.dirname(dest))
             await io.cp(file, dest)
           }
-    - name: test before
-      shell: bash
-      run: |-
-        tree -a new
-#         ls -la new
-#         ls -la new/.github/actions/cat-facts
-#         cat new/created.txt
-    - name: join file
-      shell: bash
-      run: cat created.txt >> new/created.txt
-    - name: move file
-      shell: bash
-      run: mv new/created.txt new/.github/actions/cat-facts/moved.txt
     - name: copy folder
       shell: bash
       run: |-
         mkdir -p test/more_new
-        cp -r new/.github/actions/cat-facts/* test/more_new
+        cp -r new/* test/more_new
     - name: create folder
       shell: bash
       run: mkdir -p foo/goo/zoo
@@ -62,9 +48,32 @@ jobs:
       run: |-
         mkdir -p foo/goo/zoo
         echo 'testing is fun...' > foo/goo/zoo/test.txt
+    - name: delete files
+      uses: actions/github-script@v3
+      env:
+        FILE_PATTERNS: "**/old/**,!**/keep/**"
+      with:
+        script: |-
+          const fs = require('fs').promises
+          const path = require('path')
+          const patterns = process.env.FILE_PATTERNS
+          const globber = await glob.create(patterns.replace(/,/g, "\n"))
+          for await (const file of globber.globGenerator()) {
+            if ((await fs.lstat(file)).isDirectory()) continue
+            await io.rmRF(file)
+          }
+    - name: join file
+      shell: bash
+      run: cat created.txt >> foo/goo/zoo/test.txt
+    - name: rename/move file
+      shell: bash
+      run: mv foo/goo/zoo/test.txt foo/goo/zoo/test2.txt
     - name: rename/move folder
       shell: bash
       run: mv foo/goo foo/goo2
+    - name: delete folder
+      shell: bash
+      run: rm -rf test/more_new
     - name: run command
       shell: bash
       run: |-
@@ -78,13 +87,8 @@ jobs:
         tar zxf playground.tar -C new
     - name: zip folder
       shell: bash
-      run: 7z a my_zip/dir1/goo.zip ./foo/goo2/*
+      run: 7z a my_zip/dir1/goo.zip ./foo/goo/*
     - name: unzip folder
       shell: bash
       run: unzip -d output my_zip/dir1/goo.zip
-    - name: test after
-      shell: bash
-      run: |-
-        tree -a
-#         ls -la new
-#         ls -la my_zip/dir1
+#     # 'sp.sd.fileoperations.FileTransformOperation' was not transformed because there is no suitable equivalent in GitHub Actions
