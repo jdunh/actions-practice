@@ -16,3 +16,6 @@ jobs:
     - name: download file
       shell: bash
       run: curl https://www.digitalocean.com/robots.txt --output downloads/test.txt
+    - name: post mortem
+      shell: bash
+      run: cat downloads/robots.txt
