@@ -18,7 +18,7 @@ jobs:
       shell: bash
       run: |-
         cat > created.txt <<'EOL'
-        HelloWorld!
+        Hello World!
         EOL
     - name: create folder
       shell: bash
@@ -57,7 +57,7 @@ jobs:
       run: |-
         mkdir -p foo/goo/zoo
         cat > foo/goo/zoo/test.txt <<'EOL'
-        testingisfun...
+        testing is fun...
         EOL
     - name: create folder
       shell: bash
@@ -67,7 +67,7 @@ jobs:
       run: |-
         mkdir -p old
         cat > old/created.txt <<'EOL'
-        HelloWorld!
+        Hello World!
         EOL
     - name: delete files
       uses: actions/github-script@v3
@@ -85,13 +85,13 @@ jobs:
           }
     - name: rename/move file
       shell: bash
-      run: mv foo/goo/zoo/test.txt foo/goo/zoo/test${{ github.run_id }}.txt
+      run: mv foo/goo/zoo/test.txt foo/goo/zoo/test2.txt
     - name: delete folder
       shell: bash
       run: rm -rf test/more_new
     - name: rename/move folder
       shell: bash
-      run: mv foo/goo foo/goo${{ github.run_id }}
+      run: mv foo/goo foo/goo2
     - name: delete folder
       shell: bash
       run: rm -rf test/more_new
@@ -102,15 +102,13 @@ jobs:
         tar xf playground.tar -C new
     - name: zip folder
       shell: bash
-      run: 7z a my_zip/dir1/goo${{ github.run_id }}.zip ./foo/goo${{ github.run_id }}
+      run: 7z a my_zip/dir1/goo2.zip ./foo/goo2
     - name: unzip folder
       shell: bash
-      run: unzip -d output my_zip/dir1/goo${{ github.run_id }}.zip
+      run: unzip -d output my_zip/dir1/goo2.zip
+    - name: download file
+      shell: bash
+      run: curl https://httpbin.org/image --output ./image.webp
     - name: post mortem
       shell: bash
-      run: |-
-        ls -la
-        ls output
-        ls foo/goo${{ github.run_id }}/zoo
-        ls my_zip/dir1
-        # tree -a
+      run: tree -a
