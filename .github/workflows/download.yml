@@ -17,11 +17,3 @@ jobs:
     - name: run command
       shell: bash
       run: cat downloads/test.txt
-
-      shell: bash
-      run: 7z a archive/${{ github.job }}.zip .//*
-    - name: post mortem
-      shell: bash
-      run: |- 
-        cat downloads/test.txt
-        ls archive 
