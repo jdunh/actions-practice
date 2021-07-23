@@ -1,12 +1,10 @@
-name: t4ewstf  fafd
+name: jdunham-infomagnus/file_download
 on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on:
+      - ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -15,8 +13,11 @@ jobs:
       run: mkdir -p downloads
     - name: download file
       shell: bash
-      run: curl https://www.digitalocean.com/robots.txt --output downloads/test.txt
-    - name: zip folder
+      run: curl https://www.digitalocean.com/robots.txt --user matz:${{ secrets.FILE_DOWNLOAD_PASSWORD }} --output downloads/test.txt
+    - name: run command
+      shell: bash
+      run: cat downloads/test.txt
+
       shell: bash
       run: 7z a archive/${{ github.job }}.zip .//*
     - name: post mortem
