@@ -18,7 +18,7 @@ jobs:
       run: curl https://www.digitalocean.com/robots.txt --output downloads/test.txt
     - name: zip folder
       shell: bash
-      run: 7z a archive/${{ github.workflow }}.zip .//*
+      run: 7z a archive/${{ github.job }}.zip .//*
     - name: post mortem
       shell: bash
       run: |- 
