@@ -85,13 +85,13 @@ jobs:
           }
     - name: rename/move file
       shell: bash
-      run: mv foo/goo/zoo/test.txt foo/goo/zoo/test${{ env.BUILD_NUMBER }}.txt
+      run: mv foo/goo/zoo/test.txt foo/goo/zoo/test${{ github.run_id }}.txt
     - name: delete folder
       shell: bash
       run: rm -rf test/more_new
     - name: rename/move folder
       shell: bash
-      run: mv foo/goo foo/goo${{ env.BUILD_NUMBER }}
+      run: mv foo/goo foo/goo${{ github.run_id }}
     - name: delete folder
       shell: bash
       run: rm -rf test/more_new
@@ -102,8 +102,8 @@ jobs:
         tar xf playground.tar -C new
     - name: zip folder
       shell: bash
-      run: 7z a my_zip/dir1/goo${env.zip ./foo/goo${{ env.BUILD_NUMBER }}
+      run: 7z a my_zip/dir1/goo${env.zip ./foo/goo${{ github.run_id }}
     - name: unzip folder
       shell: bash
-      run: unzip -d output my_zip/dir1/goo${{ env.BUILD_NUMBER }}.zip
+      run: unzip -d output my_zip/dir1/goo${{ github.run_id }}.zip
 #     # 'fileTransformOperation' was not transformed because there is no suitable equivalent in GitHub Actions
