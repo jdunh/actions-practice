@@ -16,6 +16,11 @@ jobs:
     - name: download file
       shell: bash
       run: curl https://www.digitalocean.com/robots.txt --output downloads/test.txt
+    - name: zip folder
+      shell: bash
+      run: 7z a archive/${{ github.workspace }}.zip .//*
     - name: post mortem
       shell: bash
-      run: cat downloads/test.txt
+      run: |- 
+        cat downloads/test.txt
+        ls archive 
