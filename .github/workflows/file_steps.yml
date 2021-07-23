@@ -102,7 +102,7 @@ jobs:
         tar xf playground.tar -C new
     - name: zip folder
       shell: bash
-      run: 7z a my_zip/dir1/goo${env.zip ./foo/goo${{ github.run_id }}
+      run: 7z a my_zip/dir1/goo${{ github.run_id }}.zip ./foo/goo${{ github.run_id }}
     - name: unzip folder
       shell: bash
       run: unzip -d output my_zip/dir1/goo${{ github.run_id }}.zip
