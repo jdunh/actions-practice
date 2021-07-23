@@ -106,4 +106,11 @@ jobs:
     - name: unzip folder
       shell: bash
       run: unzip -d output my_zip/dir1/goo${{ github.run_id }}.zip
-#     # 'fileTransformOperation' was not transformed because there is no suitable equivalent in GitHub Actions
+    - name: post mortem
+      shell: bash
+      run: |-
+        ls -la
+        ls output
+        ls foo/goo${{ github.run_id }}/zoo
+        ls my_zip/dir1
+        # tree -a
