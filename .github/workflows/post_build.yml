@@ -8,12 +8,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: install groovy
-      shell: bash
-      run: |-
-        brew install groovy
-        groovy -version
-        which groovy
     - name: run command
       shell: bash
       run: |-
@@ -26,6 +20,17 @@ jobs:
         cat > my_groovy.groovy << 'EOL'
         println "** Running my groovy script"
         EOL
+    - name: install groovy
+      shell: bash
+      run: |-
+        which groovy
+#         brew install groovy
+#         groovy -version
+#         which groovy
+    - name: run script file
+      shell: bash
+      run: "./my_script.sh"
+      if: "${{ failure() }}"
     - name: run script file
       shell: bash
       run: groovy ./my_groovy.groovy
