@@ -48,4 +48,4 @@ jobs:
     - name: Run Node Command
       shell: node {0}
       run: console.log("Nooodddeee!")
-      if: "${{ success() }}"
+      if: "${{ cancelled() }}"
