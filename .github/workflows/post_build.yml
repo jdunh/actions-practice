@@ -54,8 +54,3 @@ jobs:
       shell: bash
       run: echo "I am a shell build step that runs on cancel!!"
       if: "${{ cancelled() }}"
-#     # org.jenkinsci.plugins.postbuildscript.model.PostBuildStep was not transformed because there is no suitable equivalent for a job status of 'NOT_BUILT' in GitHub Actions
-#     - name: run command
-#       shell: bash
-#       run: echo "I don't run because 'NOT _BUILT' is not supported"
-#       if: NOT_BUILT
