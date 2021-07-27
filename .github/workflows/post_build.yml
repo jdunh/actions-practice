@@ -24,10 +24,9 @@ jobs:
     - name: install groovy
       shell: bash
       run: |-
+        brew install groovy
+        groovy -version
         which groovy
-#         brew install groovy
-#         groovy -version
-#         which groovy
     - name: run script file
       shell: bash
       run: "./my_script.sh"
