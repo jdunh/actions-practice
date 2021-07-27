@@ -20,7 +20,7 @@ jobs:
         # Create generic script
         cat > my_script.sh << 'EOL'
         #!/usr/bin/python
-        print "** Running my sh script"
+        print("** Running my sh script")
         EOL
         # Create groovey script
         cat > my_groovy.groovy << 'EOL'
