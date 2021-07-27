@@ -15,6 +15,7 @@ jobs:
         source "$HOME/.sdkman/bin/sdkman-init.sh"
         sdk install groovy
         groovy -version
+        which groovy
     - name: run command
       shell: bash
       run: |-
