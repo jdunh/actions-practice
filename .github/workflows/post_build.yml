@@ -1,0 +1,40 @@
+name: jdunham-infomagnus/post_build
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: |-
+        # Create generic script
+        cat > my_script.sh << 'EOL'
+        #!/usr/bin/python
+        print "** Running my sh script"
+        EOL
+        # Create groovey script
+        cat > my_groovy.groovy << 'EOL'
+        println "** Running my groovy script"
+        EOL
+    - name: run script file
+      shell: bash
+      run: groovy ./my_groovy.groovy
+      if: "${{ success() }}"
+    - name: run groovy script
+      shell: groovy {0}
+      run: println "** This is my added groovy script"
+      if: "${{ success() }}"
+    - name: run command
+      shell: python
+      run: 'print "** Running python script in post build!" '
+      if: "${{ success() }}"
+    - uses: actions/setup-node@v2
+      if: "${{ success() }}"
+    - name: Run Node Command
+      shell: node {0}
+      run: console.log("Nooodddeee!")
+      if: "${{ success() }}"
