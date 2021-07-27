@@ -36,7 +36,7 @@ jobs:
       if: "${{ success() }}"
     - name: run command
       shell: python
-      run: 'print "** Running python script in post build!" '
+      run: 'print("** Running python script in post build!")'
       if: "${{ success() }}"
     - uses: actions/setup-node@v2
       if: "${{ success() }}"
