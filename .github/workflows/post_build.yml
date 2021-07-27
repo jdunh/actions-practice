@@ -14,7 +14,7 @@ jobs:
         brew install groovy
         groovy -version
         which groovy
-   - name: run command
+    - name: run command
       shell: bash
       run: |-
         # Create generic script
