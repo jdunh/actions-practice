@@ -28,7 +28,7 @@ jobs:
         TARGET_PATH: results
         ARTIFACT_NAME: my-artifact
         REPO: "${{github.repository}}"
-        RUN_ID: 1
+        RUN_ID: 939761881
     - name: run command
       shell: bash
       run: tree
