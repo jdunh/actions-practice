@@ -11,6 +11,8 @@ jobs:
       run: rm -rf ${{ github.workspace }}/*
     - name: checkout
       uses: actions/checkout@v2
+    - name: run command
+      run: mkdir -p results
     - name: download artifact
       uses: dawidd6/action-download-artifact@v2
       with:
