@@ -29,7 +29,7 @@ jobs:
         ARTIFACT_NAME: my-artifact
         REPO: "${{github.repository}}"
         RUN_ID: 93974422
-      continue-on-error: true
+      continue-on-error: false
     - name: run command
       shell: bash
       run: tree
