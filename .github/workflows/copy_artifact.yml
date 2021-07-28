@@ -25,7 +25,7 @@ jobs:
       env:
         WORKFLOW_NAME: test_upload.yml
         CONCLUSION: completed,success
-        TARGET_PATH: /results
+        TARGET_PATH: results
         ARTIFACT_NAME: artifact
         REPO: "${{github.repository}}"
     - name: run command
