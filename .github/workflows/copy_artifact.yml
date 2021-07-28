@@ -26,7 +26,7 @@ jobs:
       env:
         WORKFLOW_NAME: test_upload.yml
         TARGET_PATH: results
-        ARTIFACT_NAME: artifact
+        ARTIFACT_NAME: my_artifact
         REPO: "${{github.repository}}"
         RUN_ID: 1
     - name: run command
