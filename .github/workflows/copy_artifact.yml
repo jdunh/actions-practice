@@ -12,22 +12,23 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: run command
+      shell: bash
       run: mkdir -p results
     - name: download artifact
       uses: dawidd6/action-download-artifact@v2
       with:
         github_token: "${{ secrets.GITHUB_TOKEN }}"
         workflow: "${{ env.WORKFLOW_NAME }}"
-        workflow_conclusion: "${{ env.CONCLUSION }}"
+        run_id: "${{ env.RUN_ID }}"
         name: "${{ env.ARTIFACT_NAME }}"
         path: "${{ env.TARGET_PATH }}"
         repo: "${{ env.REPO }}"
       env:
         WORKFLOW_NAME: test_upload.yml
-        CONCLUSION: completed,success
         TARGET_PATH: results
         ARTIFACT_NAME: artifact
         REPO: "${{github.repository}}"
+        RUN_ID: 1
     - name: run command
       shell: bash
       run: tree
