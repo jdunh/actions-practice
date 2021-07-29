@@ -19,16 +19,16 @@ jobs:
       with:
         github_token: "${{ secrets.GITHUB_TOKEN }}"
         workflow: "${{ env.WORKFLOW_NAME }}"
-        run_id: "${{ env.RUN_ID }}"
+        workflow_conclusion: "${{ env.CONCLUSION }}"
         name: "${{ env.ARTIFACT_NAME }}"
         path: "${{ env.TARGET_PATH }}"
         repo: "${{ env.REPO }}"
       env:
         WORKFLOW_NAME: test_upload.yml
-        TARGET_PATH: results
-        ARTIFACT_NAME: my-artifact
+        CONCLUSION: completed
+        TARGET_PATH: moved
+        ARTIFACT_NAME: artifact
         REPO: "${{github.repository}}"
-        RUN_ID: 939744222
       continue-on-error: false
     - name: run command
       shell: bash
