@@ -21,7 +21,7 @@ jobs:
          FILE_PATTERNS: "**/*.zip"
        
         with:
-         script: |-         
+         script: |         
             const fs = require('fs').promises
             const path = require('path')
             const execa = require('execa')
