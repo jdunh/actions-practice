@@ -17,9 +17,9 @@ jobs:
         mkdir -p new/test
         echo "{}" > new/test/bar.json
         ls new/test
-    - uses: actions/upload-artifact@v2
-      with: 
-        path: "**/*.txt"
+#     - uses: actions/upload-artifact@v2
+#       with: 
+#         path: "**/*.txt"
 
 
 
