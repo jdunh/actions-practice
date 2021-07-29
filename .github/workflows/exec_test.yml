@@ -24,10 +24,11 @@ jobs:
          script: |         
             const fs = require('fs').promises
             const path = require('path')
-            const execa = require('execa')
+            # const execa = require('execa')
+            const exec = require('@actions/exec')
             const target = path.resolve(process.env.DESTINATION_FOLDER)
             const patterns = process.env.FILE_PATTERNS
             
-            const { stdout } = await execa('echo', ['hello', 'world'])
+            ait exec.exec('echo', ['hello', 'world'])
 
             console.log(stdout)
