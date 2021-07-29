@@ -27,10 +27,7 @@ jobs:
             const execa = require('execa')
             const target = path.resolve(process.env.DESTINATION_FOLDER)
             const patterns = process.env.FILE_PATTERNS
-            const globber = await glob.create(patterns)
-            await io.mkdirP(path.dirname(target))
-            for await (const file of globber.globGenerator()) {
-             if ((await fs.lstat(file)).isDirectory()) continue                  
-             console.log(`7z x ${file} -o${target} -aoa`)
-             await execa('7z', ['x', file, '-o', target, '-aoa'])
-             }
+            
+            const { stdout } = await execa('echo', ['hello', 'world'])
+
+            console.log(stdout)
