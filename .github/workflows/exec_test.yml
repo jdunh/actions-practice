@@ -29,6 +29,6 @@ jobs:
             const target = path.resolve(process.env.DESTINATION_FOLDER)
             const patterns = process.env.FILE_PATTERNS
             
-            await exec.exec('echo', ['hello', 'world'])
+            await exec.exec('echo "testing"');
 
             console.log(stdout)
