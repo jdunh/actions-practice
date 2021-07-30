@@ -1,0 +1,28 @@
+name: jdunham-infomagnus/copy_artifact_pipeline
+on:
+  workflow_dispatch:
+jobs:
+  Hello:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: sh
+      shell: bash
+      run: mkdir -p copy
+    - name: download artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        github_token: "${{ secrets.GITHUB_TOKEN }}"
+        workflow: "${{ env.WORKFLOW_NAME }}"
+        workflow_conclusion: "${{ env.CONCLUSION }}"
+        name: "${{ env.ARTIFACT_NAME }}"
+        path: "${{ env.TARGET_PATH }}"
+        repo: "${{ env.REPO }}"
+      env:
+        WORKFLOW_NAME: test_upload.yml
+        CONCLUSION: completed,success
+        TARGET_PATH: copy
+        ARTIFACT_NAME: artifact
+        REPO: "${{github.repository}}"
+      continue-on-error: false
