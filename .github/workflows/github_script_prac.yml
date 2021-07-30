@@ -16,7 +16,8 @@ jobs:
       - name: set envs
         uses: actions/github-script@v4    
         with:
-         script: |         
-           process.env.GOO = "Foo"
-           process.env.IS_FUN = true
+         script: |
+          const core = require('@actions/core');
+          core.exportVariable('FOO', 'ItWorked');
+
       - run: printenv
