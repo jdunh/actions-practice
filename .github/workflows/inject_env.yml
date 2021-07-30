@@ -8,10 +8,30 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - name: create env properties file
+      shell: bash
+      run: |-
+        cat > test.properties <<'EOL'
+        website = https://en.wikipedia.org/
+        # website=https://en.wikipedia.org/
+        colon: works
+        # colon=works
+        key:colon = 1
+        # key=colon = 1
+        message = Welcome to \
+                  Wikipedia!
+        # message=Welcome to Wikipedia!
+        tab : \u0009
+        # tab=\u0009
+        my_path=c:\\wiki\\templates
+        # my_path=c:\wiki\templates
+        key1 = valueOverOneLine\\
+        # key1=valueOverOneLine\
+        EOL
     - name: inject envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_PATH: env.properties
+        PROPERTIES_PATH: test.properties
       with:
         script: |-
           const fs = require("fs")
