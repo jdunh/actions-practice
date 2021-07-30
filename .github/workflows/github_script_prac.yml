@@ -7,9 +7,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-jobs:
-        
-  ubuntu_validation_job:
+jobs: 
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,5 +17,5 @@ jobs:
         with:
          script: |
           core.exportVariable('FOO', 'ItWorked');
-
+          core.notice('Something happened that you might want to know about.')
       - run: printenv
