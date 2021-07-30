@@ -22,7 +22,7 @@ jobs:
       env:
         WORKFLOW_NAME: test_upload.yml
         CONCLUSION: completed,success
-        TARGET_PATH: copy
+        TARGET_PATH: "."
         ARTIFACT_NAME: artifact
         REPO: "${{github.repository}}"
       continue-on-error: false
