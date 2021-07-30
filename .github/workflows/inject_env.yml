@@ -8,45 +8,40 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: echo "ruby=true" > inject.properties
     - name: create env properties file
       shell: bash
       run: |-
-        cat > test.properties <<'EOL'
-        website = https://en.wikipedia.org/
-        # website=https://en.wikipedia.org/
-        colon: works
-        # colon=works
-        key:colon = 1
-        # key=colon = 1
-        message = Welcome to \
-                  Wikipedia!
-        # message=Welcome to Wikipedia!
-        tab : \u0009
-        # tab=\u0009
-        my_path=c:\\wiki\\templates
+        cat > tmp.properties <<'EOL'
+        new_path=c:\\wiki\\new
         # my_path=c:\wiki\templates
-        key1 = valueOverOneLine\\
+        key99 = true
         # key1=valueOverOneLine\
         EOL
     - name: inject envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_PATH: test.properties
+        PROPERTIES_PATH: tmp.properties,env.properties
       with:
         script: |-
           const fs = require("fs")
-          fs.readFile(process.env.PROPERTIES_PATH, 'utf8', (err, data) => {
-            const lines = data
-              // joins multiline properties
-              .replace(/\\\n( )*/g, '')
-              .split('\n')
-              // removes comments and empty lines
-              .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
-            lines.forEach(line => {
-              env = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
-              core.exportVariable(env['key'],env['value']);
+          const files = process.env.PROPERTIES_FILES.split(",")
+          files.forEach( file => {
+            fs.readFile(process.env.PROPERTIES_PATH, 'utf8', (err, data) => {
+              const lines = data
+                // joins multiline properties
+                .replace(/\\\n( )*/g, '')
+                .split('\n')
+                // removes comments and empty lines
+                .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
+              lines.forEach(line => {
+                env = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
+                core.exportVariable(env['key'],env['value']);
+              })
             })
           });
     - name: run command
       shell: bash
-      run: printenv
+      run: printenv > envs.txt
