@@ -16,6 +16,8 @@ jobs:
         uses: actions/github-script@v4    
         with:
          script: |
-          core.exportVariable('FOO', 'ItWorked');
-          core.info('Something happened that you might want to know about.')
+          let val = "ItWorked"
+          core.exportVariable('FOO', val);
+          core.setSecret(val);
+          core.info(`Set 'Foo' to ${val}...`)
       - run: printenv
