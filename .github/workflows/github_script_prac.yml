@@ -17,7 +17,6 @@ jobs:
         uses: actions/github-script@v4    
         with:
          script: |
-          const core = require('@actions/core');
           core.exportVariable('FOO', 'ItWorked');
 
       - run: printenv
