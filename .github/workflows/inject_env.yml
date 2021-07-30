@@ -29,7 +29,7 @@ jobs:
           const fs = require("fs")
           const files = process.env.PROPERTIES_FILES.split(",")
           files.forEach( file => {
-            fs.readFile(process.env.PROPERTIES_PATH, 'utf8', (err, data) => {
+            fs.readFile(file, 'utf8', (err, data) => {
               const lines = data
                 // joins multiline properties
                 .replace(/\\\n( )*/g, '')
