@@ -20,7 +20,6 @@ jobs:
          script: |
           const fs = require("fs")
           fs.readFile(process.env.PROPERTIES_PATH, 'utf8', (err, data) => {
-            if (err) throw err;
             const lines = data
               // joins multiline properties
               .replace(/\\\n( )*/g, '')
