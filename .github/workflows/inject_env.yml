@@ -23,7 +23,7 @@ jobs:
     - name: inject envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_PATH: tmp.properties,env.properties
+        PROPERTIES_FILES: tmp.properties,env.properties
       with:
         script: |-
           const fs = require("fs")
