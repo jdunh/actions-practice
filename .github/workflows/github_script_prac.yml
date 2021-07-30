@@ -13,11 +13,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: set envs
-        uses: actions/github-script@v4    
+        uses: actions/github-script@v4
+        env:
+          PROPERTIES_PATH: ./env.properties
         with:
          script: |
-          let val = "ItWorked"
-          core.exportVariable('FOO', val);
-          core.setSecret(val);
-          core.info(`Set 'Foo' to ${val}...`)
+          fs.readFile(process.env.PROPERTIES_PATH, 'utf8', (err, data) => {
+            if (err) throw err;
+            const lines = data
+              // joins multiline properties
+              .replace(/\\\n( )*/g, '')
+              .split('\n')
+              // removes comments and empty lines
+              .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
+
+            lines.forEach(line => {
+              env = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
+              core.exportVariable(env['key'],env['value']);
+            })
+          });
       - run: printenv
