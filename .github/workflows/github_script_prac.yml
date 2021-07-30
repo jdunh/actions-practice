@@ -17,5 +17,5 @@ jobs:
         with:
          script: |
           core.exportVariable('FOO', 'ItWorked');
-          core.notice('Something happened that you might want to know about.')
+          core.info('Something happened that you might want to know about.')
       - run: printenv
