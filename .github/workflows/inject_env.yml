@@ -53,7 +53,7 @@ jobs:
                       .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
                   lines.forEach(line => {
                       match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
-                      if (match['value'].startsWith("$") && match['key'].substring(1) in envs) {
+                      if (match['value'].startsWith("$") && match['value'].substring(1) in envs) {
                           match['value'] = envs[match['value'].substring(1)]
                       }
                       envs[match['key']] = match['value']
