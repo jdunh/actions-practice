@@ -59,7 +59,7 @@ jobs:
                       }
                       envs[match['key']] = match['value']
                   })
-                  envs.foreach((key, value) => {
+                  envs.forEach((key, value) => {
                       core.exportVariable(key, value);
                   })
               })
