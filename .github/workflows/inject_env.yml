@@ -46,4 +46,6 @@ jobs:
           });
     - name: run command
       shell: bash
-      run: printenv > envs.txt
+      run: | 
+        printenv > envs.txt
+        echo $test2
