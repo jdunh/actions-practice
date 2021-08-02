@@ -41,6 +41,8 @@ jobs:
                 core.exportVariable(env['key'],env['value']);
               })
             })
+          core.exportVariable("test1","123");
+          core.exportVariable("test2","$test1");
           });
     - name: run command
       shell: bash
