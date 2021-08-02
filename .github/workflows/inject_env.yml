@@ -30,6 +30,7 @@ jobs:
         key3=$key1
         key1 = valueOfKey1
         key2=$key1
+        my_workspace=$RUNNER_WORKSPACE
         EOL
     - name: inject envs
       uses: actions/github-script@v4
