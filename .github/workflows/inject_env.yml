@@ -18,20 +18,17 @@ jobs:
       shell: bash
       run: |-
         cat > tmp.properties <<'EOL'
+        # should=ignore
         website = https://en.wikipedia.org/
-        # website=https://en.wikipedia.org/
         colon: works
-        # colon=works
         key:colon = 1
-        # key=colon = 1
+        ! also=ignored
         message = Welcome to \
                   Wikipedia!
-        # message=Welcome to Wikipedia!
         tab : \u0009
-        # tab=\u0009
         my_path=c:\\wiki\\templates
-        # my_path=c:\wiki\templates
-        key1 = valueOverOneLine
+        key3=$key1
+        key1 = valueOfKey1
         key2=$key1
         EOL
     - name: inject envs
@@ -42,26 +39,22 @@ jobs:
         script: |-
           const fs = require("fs")
           const files = process.env.PROPERTIES_FILES.split(",")
-          files.forEach(file => {
-              let envs = {}
-              fs.readFile(file, 'utf8', (err, data) => {
-                  const lines = data
-                      // joins multiline properties
-                      .replace(/\\\n( )*/g, '')
-                      .split('\n')
-                      // removes comments and empty lines
-                      .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
-                  lines.forEach(line => {
-                      match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
-                      if (match['value'].startsWith("$") && match['value'].substring(1) in envs) {
-                          match['value'] = envs[match['value'].substring(1)]
-                      }
-                      envs[match['key']] = match['value']
-                  })
-                  for (const [key, value] of Object.entries(envs)) {
-                    core.exportVariable(key, value);
-                  }
+          files.forEach( file => {
+            fs.readFile(file, 'utf8', (err, data) => {
+              const lines = data
+                // joins multiline properties
+                .replace(/\\\n( )*/g, '')
+                .split('\n')
+                // removes comments and empty lines
+                .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
+              lines.forEach(line => {
+                env = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
+                if(env['value'].startsWith("$") && env['value'].substring(1) in process.env) {
+                  env['value'] = process.env[env['value'].substring(1)]
+                }
+                core.exportVariable(env['key'],env['value']);
               })
+            })
           });
     - name: run command
       shell: bash
