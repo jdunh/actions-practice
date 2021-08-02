@@ -59,7 +59,7 @@ jobs:
                 const env_name = value.substring(1)
                 if (env_name in process.env) {
                   value = process.env[env_name]
-                } elif (env_name in envs) {
+                } else if (env_name in envs) {
                   value = envs[env_name]
                 }
               }
