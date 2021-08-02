@@ -59,9 +59,9 @@ jobs:
                       }
                       envs[match['key']] = match['value']
                   })
-                  envs.forEach((key, value) => {
-                      core.exportVariable(key, value);
-                  })
+                  for (const [key, value] of Object.entries(envs)) {
+                    core.exportVariable(key, value);
+                  }
               })
           });
     - name: run command
