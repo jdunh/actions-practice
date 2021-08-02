@@ -46,14 +46,12 @@ jobs:
               fs.readFile(file, 'utf8', (err, data) => {
                   const lines = data
                       // joins multiline properties
-                      .replace(/\
-          ( )*/g, '')
-                      .split('
-          ')
+                      .replace(/\\\n( )*/g, '')
+                      .split('\n')
                       // removes comments and empty lines
                       .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
                   lines.forEach(line => {
-                      match = line.match(/(?<key>w+) *?[=:] *?(?<value>S.+)/).groups
+                      match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
                       envs[match["key"]] = match["value"]
                   })
                   for (let [key, value] of Object.entries(envs)) {
