@@ -31,8 +31,7 @@ jobs:
         # tab=\u0009
         my_path=c:\\wiki\\templates
         # my_path=c:\wiki\templates
-        key1 = valueOverOneLine\\
-        # key1=valueOverOneLine\
+        key1 = valueOverOneLine
         key2=$key1
         EOL
     - name: inject envs
