@@ -30,7 +30,7 @@ jobs:
         key3=$key1
         key1 = valueOfKey1
         key2=$key1
-        my_workspace=$RUNNER_WORKSPACE
+        my_home=$RUNNER_WORKSPACE
         EOL
     - name: inject envs
       uses: actions/github-script@v4
@@ -41,6 +41,7 @@ jobs:
           const fs = require("fs")
           const files = process.env.PROPERTIES_FILES.split(",")
           files.forEach( file => {
+            let envs = {}
             fs.readFile(file, 'utf8', (err, data) => {
               const lines = data
                 // joins multiline properties
@@ -49,13 +50,21 @@ jobs:
                 // removes comments and empty lines
                 .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
               lines.forEach(line => {
-                env = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
-                if(env['value'].startsWith("$") && env['value'].substring(1) in process.env) {
-                  env['value'] = process.env[env['value'].substring(1)]
-                }
-                core.exportVariable(env['key'],env['value']);
+                match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
+                envs[match["key"]] = match["value"]
               })
             })
+            for (const [key, value] of Object.entries(envs)) {
+              if (value.startsWith("$")) {
+                const env_name = value.substring(1)
+                if (env_name in process.env) {
+                  value = process.env[env_name]
+                } elif (env_name in envs) {
+                  value = envs[env_name]
+                }
+              }
+              core.exportVariable(key,value);
+            }
           });
     - name: run command
       shell: bash
