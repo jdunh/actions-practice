@@ -6,6 +6,9 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
+    - name: clean workspace
+      shell: bash
+      run: rm -rf ${{ github.workspace }}/*
     - name: checkout
       uses: actions/checkout@v2
     - name: run command
@@ -15,37 +18,52 @@ jobs:
       shell: bash
       run: |-
         cat > tmp.properties <<'EOL'
-        new_path=c:\\wiki\\new
+        website = https://en.wikipedia.org/
+        # website=https://en.wikipedia.org/
+        colon: works
+        # colon=works
+        key:colon = 1
+        # key=colon = 1
+        message = Welcome to \
+                  Wikipedia!
+        # message=Welcome to Wikipedia!
+        tab : \u0009
+        # tab=\u0009
+        my_path=c:\\wiki\\templates
         # my_path=c:\wiki\templates
-        key99 = true
-        key100 = $key99
+        key1 = valueOverOneLine\\
+        # key1=valueOverOneLine\
+        key2=$key1
         EOL
     - name: inject envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_FILES: tmp.properties,env.properties
+        PROPERTIES_FILES: tmp.properties,inject.properties
       with:
         script: |-
           const fs = require("fs")
           const files = process.env.PROPERTIES_FILES.split(",")
-          files.forEach( file => {
-            fs.readFile(file, 'utf8', (err, data) => {
-              const lines = data
-                // joins multiline properties
-                .replace(/\\\n( )*/g, '')
-                .split('\n')
-                // removes comments and empty lines
-                .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
-              lines.forEach(line => {
-                env = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
-                core.exportVariable(env['key'],env['value']);
+          files.forEach(file => {
+              let envs = {}
+              fs.readFile(file, 'utf8', (err, data) => {
+                  const lines = data
+                      // joins multiline properties
+                      .replace(/\\\n( )*/g, '')
+                      .split('\n')
+                      // removes comments and empty lines
+                      .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
+                  lines.forEach(line => {
+                      match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
+                      if (match['value'].startsWith("$") && envs.keys(match['key'].substring(1)).length) {
+                          match['value'] = envs[match['value'].substring(1)]
+                      }
+                      envs[match['key']] = match['value']
+                  })
+                  envs.foreach((key, value) => {
+                      core.exportVariable(key, value);
+                  })
               })
-            })
-          core.exportVariable("test1","123");
-          core.exportVariable("test2","$test1");
           });
     - name: run command
       shell: bash
-      run: | 
-        printenv > envs.txt
-        echo $test2
+      run: printenv
