@@ -54,6 +54,7 @@ jobs:
                 envs[match["key"]] = match["value"]
               })
             })
+            console.log(envs)
             for (const [key, value] of Object.entries(envs)) {
               if (value.startsWith("$")) {
                 const env_name = value.substring(1)
