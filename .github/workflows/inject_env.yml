@@ -18,7 +18,7 @@ jobs:
     - name: create env properties file
       shell: bash
       run: |-
-        cat > ${{ env.RUNNER_TEMP }}/inject-env.properties <<'EOL'
+        cat > ${{ runner.temp }}/inject-env.properties <<'EOL'
         # should=ignore
         website = https://en.wikipedia.org/
         colon: works
@@ -37,7 +37,7 @@ jobs:
     - name: inject property file envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_FILES: "{{ runner.temp }}/inject-env.properties"
+        PROPERTIES_FILES: "${{ runner.temp }}/inject-env.properties"
       with:
         script: |-
           const fs = require("fs")
