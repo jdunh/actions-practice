@@ -53,7 +53,7 @@ jobs:
               match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
               envs[match["key"]] = match["value"]
             })
-            for (const [key, value] of Object.entries(envs)) {
+            for (let [key, value] of Object.entries(envs)) {
               if (value.startsWith("$")) {
                 const env_name = value.substring(1)
                   if (env_name in process.env) {
