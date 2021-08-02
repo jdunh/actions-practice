@@ -18,7 +18,7 @@ jobs:
     - name: create env properties file
       shell: bash
       run: |-
-        cat > {{ env.RUNNER_TEMP }}/inject-env.properties <<'EOL'
+        cat > ${{ env.RUNNER_TEMP }}/inject-env.properties <<'EOL'
         # should=ignore
         website = https://en.wikipedia.org/
         colon: works
