@@ -37,7 +37,7 @@ jobs:
     - name: inject property file envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_FILES: "${{ runner.temp }}/inject-env.properties"
+        PROPERTIES_FILES: "${{ runner.temp }}/inject-env.properties,inject.properties"
       with:
         script: |-
           const fs = require("fs")
