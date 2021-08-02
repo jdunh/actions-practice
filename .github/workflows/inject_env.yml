@@ -18,7 +18,7 @@ jobs:
         new_path=c:\\wiki\\new
         # my_path=c:\wiki\templates
         key99 = true
-        # key1=valueOverOneLine\
+        key100 = $key99
         EOL
     - name: inject envs
       uses: actions/github-script@v4
