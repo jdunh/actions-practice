@@ -33,6 +33,15 @@ jobs:
         key2=$key1
         my_user=$USER
         unknown=$UNKNOWN_ENV
+        
+        varNameA=$a
+        a=valueA
+        b=$varNameA
+        
+        e=$varNameC
+        varNameC=$c
+        c=valueC
+        
         EOL
     - name: inject property file envs
       uses: actions/github-script@v4
