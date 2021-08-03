@@ -2,6 +2,7 @@ name: jdunham-infomagnus/env_inject
 on:
   workflow_dispatch:
 build:
+  jobs:
     runs-on: windows-latest
     steps:
     - name: create env properties file
