@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on:
-      - windows-latest
+      - macos-latest
     steps:
     - name: clean workspace
       shell: bash
@@ -21,12 +21,12 @@ jobs:
     - name: create envs.properties
       shell: bash
       run: echo "ruby=true" > envs.properties
-#     - name: install groovy
-#       shell: bash
-#       run: brew install groovy
-#     - name: run groovy script
-#       shell: groovy {0}
-#       run: println "Groovy!!"
+    - name: install groovy
+      shell: bash
+      run: brew install groovy
+    - name: run groovy script
+      shell: groovy {0}
+      run: println "Groovy!!"
     - name: create env properties file
       shell: bash
       run: |-
