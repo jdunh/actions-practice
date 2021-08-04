@@ -17,6 +17,7 @@ jobs:
         cat > my_script <<'EOL'
         echo "running my_script"
         EOL
+        chmod +x my_script
     - name: create envs.properties
       shell: bash
       run: echo "ruby=true" > envs.properties
@@ -84,7 +85,7 @@ jobs:
       shell: bash
       run: |-
         rm -f ${{ github.run_id }}.properties
-        rm -f ${{ github.run_id }}_script
+        rm -f ./${{ github.run_id }}_script
     - name: run command
       shell: bash
       run: printenv
