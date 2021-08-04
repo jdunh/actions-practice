@@ -6,16 +6,16 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
-    - name: install groovy
-      run: brew install groovy
+#     - name: install groovy
+#       run: brew install groovy
     - name: clean workspace
       shell: bash
       run: rm -rf ${{ github.workspace }}/*
     - name: checkout
       uses: actions/checkout@v2
-    - name: run groovy script
-      shell: groovy {0}
-      run: println "Groovy!!"
+#     - name: run groovy script
+#       shell: groovy {0}
+#       run: println "Groovy!!"
     - name: create env properties file
       shell: bash
       run: |-
@@ -65,6 +65,7 @@ jobs:
         print("Doing something")
         print("very important")
         EOL
+        chmod +x ${{ runner.temp }}/temp_script
         ${{ runner.temp }}/temp_script
     - name: run command
       shell: bash
