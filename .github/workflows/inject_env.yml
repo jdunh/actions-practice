@@ -7,7 +7,7 @@ jobs:
     steps:
     - name: create properties file
       run: |-
-        cat > ${{ runner.temp }}/inject.properties <<'EOL'
+        cat > inject.properties <<'EOL'
         RUBY=true
         EOL
     - name: create env properties file
