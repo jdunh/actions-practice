@@ -12,7 +12,7 @@ jobs:
       - name: package?
         shell: bash
         run: |
-          which 7z
+          which python
           which unzip
           which tar
 
