@@ -6,34 +6,22 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
+    - name: install groovy
+      run: brew install groovy
     - name: clean workspace
       shell: bash
       run: rm -rf ${{ github.workspace }}/*
     - name: checkout
       uses: actions/checkout@v2
-    - name: install groovy
-      run: brew install groovy
     - name: run groovy script
       shell: groovy {0}
-      run: println "Groooooovy!"
+      run: println "Groovy!!"
     - name: create env properties file
       shell: bash
       run: |-
         cat > ${{ runner.temp }}/inject-env.properties <<'EOL'
-        # should=ignore
-        website = https://en.wikipedia.org/
-        colon: works
-        key:colon = 1
-        ! also=ignored
-        message = Welcome to \
-                  Wikipedia!
-        tab : \u0009
-        my_path=c:\\wiki\\templates
-        key3=$key1
-        key1 = valueOfKey1
-        key2=$key1
-        my_user=$USER
-        unknown=$UNKNOWN_ENV
+        testing: is_fun
+        is_jenkins= false
         EOL
     - name: inject property file envs
       uses: actions/github-script@v4
@@ -71,8 +59,9 @@ jobs:
           });
     - name: run script
       run: |-
-        echo "testing"
-        echo "next line"
-        ls
-    - name: post mortem
+        #!/usr/bin/python
+        print("Doing something")
+        print("very important")
+    - name: run command
+      shell: bash
       run: printenv
