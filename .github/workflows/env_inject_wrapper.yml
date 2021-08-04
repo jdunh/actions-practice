@@ -6,31 +6,32 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
-#     - name: install groovy
-#       run: brew install groovy
+    - name: clean workspace
+      shell: bash
+      run: rm -rf ${{ github.workspace }}/*
     - name: checkout
       uses: actions/checkout@v2
+    - name: create my_script
+      shell: bash
+      run: |-
+        cat > my_script <<'EOL'
+        echo "running my_script"
+        EOL
 #     - name: run groovy script
 #       shell: groovy {0}
 #       run: println "Groovy!!"
-    - name: create script file
-      shell: bash
-      run: |- 
-        cat > my_script <<'EOL'
-        echo "running my script"
-        EOL
-        chmod +x my_script
     - name: create env properties file
       shell: bash
       run: |-
-        cat > ${{ runner.temp }}/inject-env.properties <<'EOL'
-        testing: is_fun
-        is_jenkins= false
+        cat > ${{ github.run_id }}.properties <<'EOL'
+        ! This is a comment
+        MY_NAME: matz
+        IS_GITHUB=true
         EOL
     - name: inject property file envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_FILES: "${{ runner.temp }}/inject-env.properties"
+        PROPERTIES_FILES: "${{ github.run_id }}.properties,envs.properties"
       with:
         script: |-
           const fs = require("fs")
@@ -64,16 +65,21 @@ jobs:
     - name: run script
       shell: bash
       run: |-
-        cat > ${{ runner.temp }}/temp_script <<'EOL'
+        cat > ${{ github.run_id }}_script <<'EOL'
         #!/usr/bin/python
         print("Doing something")
         print("very important")
         EOL
-        chmod +x ${{ runner.temp }}/temp_script
-        ${{ runner.temp }}/temp_script
+        chmod +x ${{ github.run_id }}_script
+        ${{ github.run_id }}_script
     - name: run script file
       shell: bash
       run: "./my_script"
+    - name: clean up temp files
+      shell: bash
+      run: |-
+        rm -f ${{ github.run_id }}.properties
+        rm -f ${{ github.run_id }}_script
     - name: run command
       shell: bash
       run: printenv
