@@ -12,7 +12,6 @@ jobs:
         RUBY=true
         EOL
     - name: create env properties file
-      shell: bash
       run: |-
         cat > ${{ runner.temp }}\\inject-env.properties <<'EOL'
         # this is a comment
