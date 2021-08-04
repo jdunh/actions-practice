@@ -1,19 +1,23 @@
-name: jdunham-infomagnus/env_inject
+name: jdunham-infomagnus/env_inject_build_step
 on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on:
+      - ubuntu-latest
     steps:
-    - name: create properties file
+    - name: clean workspace
+      shell: bash
+      run: rm -rf ${{ github.workspace }}/*
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: echo "ruby=true" > inject.properties
+    - name: create env properties file
       shell: bash
       run: |-
-        cat > inject.properties <<'EOL'
-        RUBY=true
-        EOL
-    - name: create env properties file
-      run: |-
-        cat > ${{ runner.temp }}\\inject-env.properties <<'EOL'
+        cat > ${{ github.job }}.properties <<'EOL'
         # this is a comment
         MY_USER=matz
         MY_HOME:/home/usr/matz
@@ -21,39 +25,37 @@ jobs:
     - name: inject property file envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_FILES: "${{ runner.temp }}\\inject-env.properties,inject.properties"
+        PROPERTIES_FILES: "${{ github.job }}.properties,inject.properties"
       with:
         script: |-
           const fs = require("fs")
           const files = process.env.PROPERTIES_FILES.split(",")
           files.forEach(file => {
-          let envs = {}
-          fs.readFile(file, 'utf8', (err, data) => {
-            const lines = data
-              // joins multiline properties
-              .replace(/\\\n( )*/g, '')
-              .split('\n')
-              // removes comments and empty lines
-              .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
-            lines.forEach(line => {
-              match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
-              envs[match["key"]] = match["value"]
-            })
-            for (let [key, value] of Object.entries(envs)) {
-              if (value.startsWith("$")) {
-                const env_name = value.substring(1)
-                if (env_name in process.env) {
-                  value = process.env[env_name]
-                } else if (env_name in envs) {
-                  value = envs[env_name]
+            let envs = {}
+            fs.readFile(file, 'utf8', (err, data) => {
+              const lines = data
+                // joins multiline properties
+                .replace(/\\\n( )*/g, '')
+                .split('\n')
+                // removes comments and empty lines
+                .filter(line => line && !line.startsWith("#") && !line.startsWith("!"))
+              lines.forEach(line => {
+                match = line.match(/(?<key>\w+)\s*?[=:]\s*?(?<value>\S.+)/).groups
+                envs[match["key"]] = match["value"]
+              })
+              for (let [key, value] of Object.entries(envs)) {
+                if (value.startsWith("$")) {
+                  const env_name = value.substring(1)
+                  if (env_name in process.env) {
+                     value = process.env[env_name]
+                  } else if (env_name in envs) {
+                    value = envs[env_name]
+                  }
                 }
+                core.exportVariable(key, value);
               }
-              core.exportVariable(key, value);
-            }
             })
           });
-    - name: read envs
+    - name: run command
       shell: bash
-      run: |-
-        echo ${{ env.is_test }}
-        echo ${{ env.var1 }}
+      run: printenv > envs.txt
