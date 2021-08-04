@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on:
-      - ubuntu-latest
+      - windows-latest
     steps:
     - name: clean workspace
       shell: bash
@@ -88,4 +88,6 @@ jobs:
         rm -f ./${{ github.run_id }}_script
     - name: run command
       shell: bash
-      run: printenv
+      run: |-
+        printenv
+        ls
