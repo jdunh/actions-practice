@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on:
-      - windows-latest
+      - ubuntu-latest
     steps:
     - name: clean workspace
       shell: bash
@@ -58,6 +58,12 @@ jobs:
           });
     - name: run command
       shell: bash
-      run: |-
+      run: ls
+    - name: clean up temp files
+      shell: bash
+      run: rm -f ${{ github.run_id }}.properties
+    - name: run command
+      shell: bash
+      run: |- 
         printenv > envs.txt
         ls
