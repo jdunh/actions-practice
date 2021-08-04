@@ -58,10 +58,14 @@ jobs:
             })
           });
     - name: run script
+      shell: bash
       run: |-
+        cat > ${{ runner.temp }}/temp_script <<'EOL'
         #!/usr/bin/python
-        print "Doing something"
-        print "very important"
+        print("Doing something")
+        print("very important")
+        EOL
+        ${{ runner.temp }}/temp_script
     - name: run command
       shell: bash
       run: printenv
