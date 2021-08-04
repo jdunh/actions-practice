@@ -70,13 +70,13 @@ jobs:
     - name: run script
       shell: bash
       run: |-
-        cat > ${{ github.run_id }}_script <<'EOL'
+        cat > ./${{ github.run_id }}_script <<'EOL'
         #!/usr/bin/python
         print("Doing something")
         print("very important")
         EOL
-        chmod +x ${{ github.run_id }}_script
-        ${{ github.run_id }}_script
+        chmod +x ./${{ github.run_id }}_script
+        ./${{ github.run_id }}_script
     - name: run script file
       shell: bash
       run: "./my_script"
