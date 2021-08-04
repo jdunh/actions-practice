@@ -17,7 +17,7 @@ jobs:
     - name: create env properties file
       shell: bash
       run: |-
-        cat > ${{ github.job }}.properties <<'EOL'
+        cat > ${{ github.run_id }}.properties <<'EOL'
         # this is a comment
         MY_USER=matz
         MY_HOME:/home/usr/matz
@@ -25,7 +25,7 @@ jobs:
     - name: inject property file envs
       uses: actions/github-script@v4
       env:
-        PROPERTIES_FILES: "${{ github.job }}.properties,inject.properties"
+        PROPERTIES_FILES: "${{ github.run_id }}.properties,inject.properties"
       with:
         script: |-
           const fs = require("fs")
