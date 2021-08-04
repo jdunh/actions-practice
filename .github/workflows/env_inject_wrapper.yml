@@ -22,6 +22,7 @@ jobs:
       shell: bash
       run: echo "ruby=true" > envs.properties
     - name: install groovy
+      shell: bash
       run: brew install groovy
     - name: run groovy script
       shell: groovy {0}
