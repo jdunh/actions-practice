@@ -73,9 +73,8 @@ jobs:
       shell: bash
       run: |-
         cat > ./${{ github.run_id }}_script <<'EOL'
-        #!/usr/bin/python
-        print("Doing something")
-        print("very important")
+        echo "running temp script"
+        ls
         EOL
         chmod +x ./${{ github.run_id }}_script
         ./${{ github.run_id }}_script
