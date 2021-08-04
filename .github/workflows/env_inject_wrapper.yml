@@ -60,8 +60,8 @@ jobs:
     - name: run script
       run: |-
         #!/usr/bin/python
-        print("Doing something")
-        print("very important")
+        print "Doing something"
+        print "very important"
     - name: run command
       shell: bash
       run: printenv
