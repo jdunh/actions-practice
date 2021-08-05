@@ -1,5 +1,6 @@
 name: input_test
 on:
+  push:
   workflow_dispatch:
     inputs:
       name:
