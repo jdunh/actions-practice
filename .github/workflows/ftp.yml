@@ -59,6 +59,9 @@ jobs:
       env:
         FPT_PORT: 21
         REMOTE_DIRECTORY: UPDATE_ME
-    - name: run file transfers
-      run: ftp -pvn < JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
+    - name: check file
+      run: cat JD_FTP_SERVER_transfer.txt
       if: always()
+#     - name: run file transfers
+#       run: ftp -pvn < JD_FTP_SERVER_transfer.txt && rm JD_FTP_SERVER_transfer.txt
+#       if: always()
