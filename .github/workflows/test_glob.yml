@@ -1,0 +1,35 @@
+name: jdunham-infomagnus/SCPPublish
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: |-
+        echo "${{ github.workflow }}-${{ github.run_id }}" > job.txt
+        echo "testing" > new.txt
+        mkdir -p new/test
+        echo "{}" > new/test/bar.json
+        ls new/test
+    - name: setup file transfer file
+      uses: actions/github-script@v3
+      with:
+        script: |-
+          const fs = require('fs').promises
+          const path = require('path')
+          const patterns = "**/**.txt,**/**.json"
+          const globber = await glob.create(patterns.replace(/,/g, "\n"))
+          const files = []
+          for await (const file of globber.globGenerator()) {
+              if ((await fs.lstat(file)).isDirectory()) continue
+              files.push(path.relative(process.cwd(), file))
+          }
+          fs.writeFile("scp_transfer.txt", files.join("\n"), (err) => {})
+    - name: run test file
+      run: |-
+        cat scp_transfer.txt
