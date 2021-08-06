@@ -22,7 +22,7 @@ jobs:
         script: |-
           const fs = require('fs').promises
           const path = require('path')
-          const patterns = "new1.txt,!**/**.yaml,!**/*~,!**/#*#,!**/.#*,!**/%*%,!**/._*,!**/CVS,!**/CVS/**,!**/.cvsignore,!**/SCCS,!**/SCCS/**,!**/vssver.scc,!**/.svn,!**/.svn/**,!**/.DS_Store,!**/.git,!**/.git/**,!**/.gitattributes,!**/.gitignore,!**/.gitmodules,!**/.hg,!**/.hg/**,!**/.hgignore,!**/.hgsub,!**/.hgsubstate,!**/.hgtags,!**/.bzr,!**/.bzr/**,!**/.bzrignore"
+          const patterns = "new1.txt,**/**.yaml,!**/*~,!**/#*#,!**/.#*,!**/%*%,!**/._*,!**/CVS,!**/CVS/**,!**/.cvsignore,!**/SCCS,!**/SCCS/**,!**/vssver.scc,!**/.svn,!**/.svn/**,!**/.DS_Store,!**/.git,!**/.git/**,!**/.gitattributes,!**/.gitignore,!**/.gitmodules,!**/.hg,!**/.hg/**,!**/.hgignore,!**/.hgsub,!**/.hgsubstate,!**/.hgtags,!**/.bzr,!**/.bzr/**,!**/.bzrignore"
           const globber = await glob.create(patterns.replace(",", "\n"))
           const files = []
           const dirs = []
