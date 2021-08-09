@@ -1,0 +1,17 @@
+# This is a basic workflow to help you get started with Actions
+
+name: test_approval
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    environment: test
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: run command
+      shell: bash
+      run: echo "Approved! running!"
