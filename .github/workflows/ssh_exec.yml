@@ -23,7 +23,7 @@ jobs:
         EOL
     - name: run command
       shell: python
-      run: print "Building something"
+      run: print("Building something")
     - name: run script over ssh
       run: |-
         ssh -T ec2-user@54.91.186.191 -p 22 <<'EOL'
