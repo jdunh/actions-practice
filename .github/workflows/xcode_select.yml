@@ -15,7 +15,7 @@ jobs:
         
       - name: Run a multi-line script
         run: |
-          xcode-select -s /Applications/Xcode_11.7.app
+          sudo xcode-select -s /Applications/Xcode_11.7.app
           xcodebuild -version
-          xcode-select -s /Applications/Xcode_13.0.app
+          sudo xcode-select -s /Applications/Xcode_13.0.app
           xcodebuild -version
