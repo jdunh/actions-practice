@@ -7,9 +7,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: create random file
-      run: echo "random file" | "${{ runner.temp }}/random.txt" 
+      run: echo "random file" >> "${{ runner.temp }}/random.txt" 
     - name: create desired artifact file
-      run: echo "should be archived" | "${{ runner.temp }}/keep.txt" 
+      run: echo "should be archived" >> "${{ runner.temp }}/keep.txt" 
     - name: 'Copy Publish Artifact: Sox_Audito_ACL_Poc'
       uses: actions/upload-artifact@v2
       with:
