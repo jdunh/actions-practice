@@ -15,4 +15,9 @@ jobs:
           server-name: jd-actions.database.windows.net
           connection-string: ${{ secrets.DACPAC_CONNECTION }}
           dacpac-package: AwesomeCompany.dacpac
-
+      - name: Azure SQL Deploy
+        uses: Azure/sql-action@v1
+        with:
+          server-name: jd-actions.database.windows.net
+          connection-string: ${{ secrets.DACPAC_CONNECTION }}
+          sql-file: my_script.sql
