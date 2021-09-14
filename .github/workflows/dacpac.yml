@@ -1,7 +1,7 @@
 
 name: Dacpac
 
-on: workflow_dispatch:
+on: workflow_dispatch
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -11,8 +11,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Azure SQL Deploy
         uses: Azure/sql-action@v1
-         with:
-            server-name: jd-actions.database.windows.net
-            connection-string: ${{ secrets.DACPAC_CONNECTION }}
-            dacpac-package: AwesomeCompany.dacpac
+        with:
+          server-name: jd-actions.database.windows.net
+          connection-string: ${{ secrets.DACPAC_CONNECTION }}
+          dacpac-package: AwesomeCompany.dacpac
 
