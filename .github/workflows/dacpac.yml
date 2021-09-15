@@ -1,23 +1,30 @@
-
-name: Dacpac
-
-on: workflow_dispatch
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+name: build-playground/SqlAzureDacpacDeployment
+on:
+  workflow_dispatch:
 jobs:
-  build:
+  Job:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Azure SQL Deploy
-        uses: Azure/sql-action@v1
-        with:
-          server-name: jd-actions.database.windows.net
-          connection-string: ${{ secrets.DACPAC_CONNECTION }}
-          dacpac-package: AwesomeCompany.dacpac
-      - name: Azure SQL Deploy
-        uses: Azure/sql-action@v1
-        with:
-          server-name: jd-actions.database.windows.net
-          connection-string: ${{ secrets.DACPAC_CONNECTION }}
-          sql-file: my_script.sql
+    - name: checkout
+      uses: actions/checkout@v2
+#     - uses: Azure/login@v1
+#       with:
+#         creds: "${{ secrets.AZURE_CREDENTIALS }}"
+    # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
+    - name: Azure SQL Deploy
+      uses: Azure/sql-action@v1
+      with:
+        server-name: "${{ env.SERVER_NAME }}"
+        connection-string: "${{ secrets.DACPAC_CONNECTION }}"
+        dacpac-package: AwesomeCompany.dacpac
+      env:
+        SERVER_NAME: jd-testing.database.windows.net
+    # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
+    - name: Azure SQL Deploy
+      uses: Azure/sql-action@v1
+      with:
+        server-name: "${{ env.SERVER_NAME }}"
+        connection-string: "${{ secrets.DACPAC_CONNECTION }}"
+        sql-file: my_script.sql
+      env:
+        SERVER_NAME: jd-testing.database.windows.net
