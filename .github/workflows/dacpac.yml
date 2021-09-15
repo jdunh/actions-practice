@@ -10,11 +10,11 @@ jobs:
     - name: Create Inline SQL File
       shell: bash
       run: |-
-        cat > ${{ runner.TEMP }}\dacpac_deploy.sql <<'EOL'
+        cat > dacpac_deploy.sql <<'EOL'
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         EOL
-    - run: cat "${{ runner.TEMP }}\dacpac_deploy.sql"
+    - run: cat dacpac_deploy.sql
     # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
 #     - name: Azure SQL Deploy
 #       uses: Azure/sql-action@v1
