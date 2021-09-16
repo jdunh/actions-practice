@@ -10,7 +10,7 @@ jobs:
     - name: Create Inline SQL File
       shell: bash
       run: |-
-        cat > ${{ runner.temp }}\\dacpac_deploy.sql <<'EOL'
+        cat > ${{ runner.temp }}//dacpac_deploy.sql <<'EOL'
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         EOL
