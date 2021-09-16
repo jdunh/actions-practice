@@ -9,10 +9,10 @@ jobs:
       uses: actions/checkout@v2
     - name: Create Inline SQL File
       run: |-
-        @'
+        cat > ${{ runner.TEMP }}\dacpac_deploy.sql <<'EOL'
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
-        '@ | Add-Content ${{ runner.TEMP }}\dacpac_deploy.sq
+        EOL
     - run: cat ${{ runner.TEMP }}\dacpac_deploy.sq
     # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
 #     - name: Azure SQL Deploy
