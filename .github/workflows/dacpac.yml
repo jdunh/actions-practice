@@ -1,24 +1,23 @@
 name: build-playground/SqlAzureDacpacDeployment
 on:
   workflow_dispatch:
+
 jobs:
   Job:
     runs-on: windows-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
-    - name: Azure SQL Deploy
-      uses: Azure/sql-action@v1
+    # if 'Allow Azure Services and resources to access this server' is ON the Azure/login step above can likely be removed
+    - uses: Azure/sql-action@v1
       with:
         server-name: "${{ env.SERVER_NAME }}"
         connection-string: "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
         dacpac-package: AwesomeCompany.dacpac
       env:
         SERVER_NAME: jd-testing.database.windows.net
-    # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
-    - name: Azure SQL Deploy
-      uses: Azure/sql-action@v1
+    # if 'Allow Azure Services and resources to access this server' is ON the Azure/login step above can likely be removed
+    - uses: Azure/sql-action@v1
       with:
         server-name: "${{ env.SERVER_NAME }}"
         connection-string: "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
@@ -26,14 +25,14 @@ jobs:
       env:
         SERVER_NAME: jd-testing.database.windows.net
     - name: Create Inline SQL File
+      shell: pwsh
       run: |-
         @'
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         '@ | Add-Content ${{ runner.temp }}\dacpac_deploy.sql
-    # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
-    - name: Azure SQL Deploy
-      uses: Azure/sql-action@v1
+    # if 'Allow Azure Services and resources to access this server' is ON the Azure/login step above can likely be removed
+    - uses: Azure/sql-action@v1
       with:
         server-name: "${{ env.SERVER_NAME }}"
         connection-string: "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
