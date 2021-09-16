@@ -7,21 +7,37 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
+    - name: Azure SQL Deploy
+      uses: Azure/sql-action@v1
+      with:
+        server-name: "${{ env.SERVER_NAME }}"
+        connection-string: "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
+        dacpac-package: AwesomeCompany.dacpac
+      env:
+        SERVER_NAME: jd-testing.database.windows.net
+    # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
+    - name: Azure SQL Deploy
+      uses: Azure/sql-action@v1
+      with:
+        server-name: "${{ env.SERVER_NAME }}"
+        connection-string: "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
+        sql-file: my_script.sql
+      env:
+        SERVER_NAME: jd-testing.database.windows.net
     - name: Create Inline SQL File
       run: |-
         @'
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
         '@ | Add-Content ${{ runner.temp }}\dacpac_deploy.sql
-    - run: ls ${{ runner.temp }}
-    - run: cat ${{ runner.TEMP }}\\dacpac_deploy.sql
     # if Allow Azure Services and resources to access this server are ON the Azure/login step above can likely be removed
-#     - name: Azure SQL Deploy
-#       uses: Azure/sql-action@v1
-#       with:
-#         server-name: "${{ env.SERVER_NAME }}"
-#         connection-string: "${{ secrets.DACPAC_CONNECTION  }}"
-#         sql-file: "${{ runner.TEMP }}\dacpac_deploy.sql"
-#       env:
-#         SERVER_NAME: jd-testing.database.windows.net
+    - name: Azure SQL Deploy
+      uses: Azure/sql-action@v1
+      with:
+        server-name: "${{ env.SERVER_NAME }}"
+        connection-string: "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
+        sql-file: "${{ runner.temp }}\\dacpac_deploy.sql"
+      env:
+        SERVER_NAME: jd-testing.database.windows.net
 
