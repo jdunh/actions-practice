@@ -18,4 +18,4 @@ jobs:
     - run: cat ${{ runner.temp }}\dacpac_deploy.sql
       shell: bash
     - run: ls .
-    - run: echo $RUNNER_TEMP
+    - run: echo ${{ runner.temp }}
