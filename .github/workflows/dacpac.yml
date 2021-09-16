@@ -8,6 +8,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Create Inline SQL File
+      shell: bash
       run: |-
         cat > ${{ runner.TEMP }}\dacpac_deploy.sql <<'EOL'
         INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
