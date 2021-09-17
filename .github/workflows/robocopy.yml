@@ -26,8 +26,10 @@ jobs:
         if ($LASTEXITCODE -ge 8)
         {
           Write-Output "Failed to Copy"
+          exit 1
         }
         else
         {
           Write-Output "Success"
+          exit 0
         }
