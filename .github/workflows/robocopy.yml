@@ -1,0 +1,20 @@
+
+
+name: RoboCopy
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - run: |
+        $password = "${{ secrets.WIN_SHARE_PASSWORD }}"
+        $username = "jd"
+
+        $psCredentialObject = New-Object pscredential -ArgumentList $username, (ConvertTo-SecureString -String "Ruby-Joel-Pass-1" -AsPlainText -Force)
+
+        $destinationNetworkPath = "\\13.93.236.53\C$\Users\jd\Desktop\testing"
+
+        New-PSDrive -Name "WFCPSDrive" -PSProvider FileSystem -Root $destinationNetworkPath -Credential $psCredentialObject -ErrorAction 'Stop'
