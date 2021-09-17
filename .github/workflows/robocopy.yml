@@ -23,13 +23,5 @@ jobs:
 
         robocopy "$sourceDirectory" "$destinationNetworkPath" "test.txt" $robocopyParameters /DCOPY:DA /COPY:DAT /R:1000000 /W:30
         
-        if ($LASTEXITCODE -ge 8)
-        {
-          Write-Output "Failed to Copy"
-          exit 1
-        }
-        else
-        {
-          Write-Output "Success"
-          exit 0
-        }
+        $exitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
+        exit $exitCode
