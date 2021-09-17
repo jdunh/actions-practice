@@ -11,7 +11,7 @@ jobs:
     steps:
     - run: echo "It Works!" >> test.txt
     - run: |
-        $password = "Ruby-Joel-Pass-1"
+        $password = "${{ secrets.WIN_SHARE_PASSWORD }}"
         $username = "jd"
         $sourceDirectory = "."
 
