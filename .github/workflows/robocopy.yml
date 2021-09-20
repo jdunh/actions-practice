@@ -12,19 +12,17 @@ jobs:
     - run: |-
         $sourcePath = "my_script.sql"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
-        Write-Output $isFileCopy
         $sourceDirectory = $sourcePath
         $filesToCopy = ""
         if($isFileCopy)
         {
             $sourceDirectory = Split-Path $sourcePath
             $filesToCopy = Split-Path $sourcePath -Leaf
+            if($sourceDirectory -eq $null){ $sourceDirectory = "." }
         }
-        Write-Output "source = $sourceDirectory" 
-        Write-Output "file = $filesToCopy"
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root \\52.186.49.95\C$\Users\jd\Desktop\testing -Credential $psCredentialObject -ErrorAction 'Stop'
-        robocopy `"$sourceDirectory`" "\\52.186.49.95\C$\Users\jd\Desktop\testing" $filesToCopy /DCOPY:DA /COPY:DAT /R:1000000 /W:30
+        robocopy '$sourceDirectory' '\\52.186.49.95\C$\Users\jd\Desktop\testing' '$filesToCopy' /DCOPY:DA /COPY:DAT /R:1000000 /W:30
         $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
-        net use /delete "\\52.186.49.95\C$\Users\jd\Desktop\testing" '2>NUL'
+        net use /delete '\\52.186.49.95\C$\Users\jd\Desktop\testing' '2>NUL'
         exit $copyExitCode
