@@ -15,7 +15,7 @@ jobs:
         $filesToCopy = ""
         if($isFileCopy)
         {
-            $sourceDirectory = Split-Path $sourcePath
+            $sourceDirectory = Split-Path "my_script.sql"
             $filesToCopy = Split-Path $sourcePath -Leaf
         }
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
