@@ -10,7 +10,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: |-
-        $sourcePath = "my_script.sql"
+        $sourcePath = ".github/workflows"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
         $filesToCopy = ""
