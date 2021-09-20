@@ -12,6 +12,7 @@ jobs:
     - run: |-
         $sourcePath = "my_script.sql"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
+        Write-Output $isFileCopy
         $sourceDirectory = $sourcePath
         $filesToCopy = ""
         if($isFileCopy)
