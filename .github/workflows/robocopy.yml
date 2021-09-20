@@ -18,7 +18,7 @@ jobs:
         {
             $sourceDirectory = Split-Path $sourcePath
             $filesToCopy = Split-Path $sourcePath -Leaf
-            if($sourceDirectory -eq $null){ $sourceDirectory = "." }
+            if(-not $sourceDirectory){ $sourceDirectory = "." }
         }
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root \\52.186.49.95\C$\Users\jd\Desktop\testing -Credential $psCredentialObject -ErrorAction 'Stop'
