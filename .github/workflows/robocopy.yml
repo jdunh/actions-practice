@@ -10,12 +10,13 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: |-
-        $isFileCopy = Test-Path -Path my_script.sql -PathType Leaf
-        $sourceDirectory = "my_script.sql"
+        $sourcePath = "my_script.sql""
+        $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
+        $sourceDirectory = $sourcePath
         $filesToCopy = ""
         if($isFileCopy)
         {
-            $sourceDirectory = Split-Path "my_script.sql"
+            $sourceDirectory = Split-Path $sourcePath
             $filesToCopy = Split-Path $sourcePath -Leaf
         }
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
