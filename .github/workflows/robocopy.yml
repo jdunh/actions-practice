@@ -1,27 +1,26 @@
-
-
-name: RoboCopy
-
-on: [workflow_dispatch]
-
+name: build-playground/WindowsMachineFileCopy
+on:
+  workflow_dispatch:
+env:
+  SYSTEM.DEBUG: 'true'
 jobs:
-  build:
+  Job:
     runs-on: windows-latest
-
     steps:
-    - run: echo "It Works!" >> test.txt
-    - run: |
-        $password = "${{ secrets.WIN_SHARE_PASSWORD }}"
-        $username = "jd"
-        $sourceDirectory = "."
-
-        $psCredentialObject = New-Object pscredential -ArgumentList $username, (ConvertTo-SecureString -String "Ruby-Joel-Pass-1" -AsPlainText -Force)
-
-        $destinationNetworkPath = "\\13.93.236.53\C$\Users\jd\Desktop\testing"
-
-        New-PSDrive -Name "WFCPSDrive" -PSProvider FileSystem -Root $destinationNetworkPath -Credential $psCredentialObject -ErrorAction 'Stop'
-
-        robocopy "$sourceDirectory" "$destinationNetworkPath" "test.txt" $robocopyParameters /DCOPY:DA /COPY:DAT /R:1000000 /W:30
-        
-        $exitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
-        exit $exitCode
+    - name: checkout
+      uses: actions/checkout@v2
+    - run: |-
+        $isFileCopy = Test-Path -Path my_script.sql -PathType Leaf
+        $sourceDirectory = my_script.sql
+        $filesToCopy = ""
+        if($isFileCopy)
+        {
+            $sourceDirectory = Split-Path $sourcePath
+            $filesToCopy = Split-Path $sourcePath -Leaf
+        }
+        $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
+        New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root \\52.186.49.95\C$\Users\jd\Desktop\testing -Credential $psCredentialObject -ErrorAction 'Stop'
+        robocopy '$sourceDirectory' '\\52.186.49.95\C$\Users\jd\Desktop\testing' '$filesToCopy' /DCOPY:DA /COPY:DAT /R:1000000 /W:30
+        $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
+        net use /delete '\\52.186.49.95\C$\Users\jd\Desktop\testing' '2>NUL'
+        exit $copyExitCode
