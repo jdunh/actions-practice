@@ -20,7 +20,8 @@ jobs:
             $sourceDirectory = Split-Path $sourcePath
             $filesToCopy = Split-Path $sourcePath -Leaf
         }
-        Write-Output $sourceDirectory $filesToCopy
+        Write-Output "source = $sourceDirectory" 
+        Write-Output "file = $filesToCopy"
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root \\52.186.49.95\C$\Users\jd\Desktop\testing -Credential $psCredentialObject -ErrorAction 'Stop'
         robocopy "." "\\52.186.49.95\C$\Users\jd\Desktop\testing" $filesToCopy /DCOPY:DA /COPY:DAT /R:1000000 /W:30
