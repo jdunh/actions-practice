@@ -20,7 +20,7 @@ jobs:
             $filesToCopy = Split-Path $sourcePath -Leaf
             if(-not $sourceDirectory){ $sourceDirectory = "." }
         }
-        else {
+        if(-not $isFileCopy.IsPresent){
             $robocopyParameters += " /E"
         }
         if(-not $fileCopy.IsPresent) { $robocopyParameters += " /E" }
