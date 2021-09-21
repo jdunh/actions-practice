@@ -15,7 +15,7 @@ jobs:
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
         $filesToCopy = ""
-        if($isFileCopy) {
+        if($isFileCopy -eq $true) {
             $sourceDirectory = Split-Path $sourcePath
             $filesToCopy = Split-Path $sourcePath -Leaf
             if(-not $sourceDirectory){ $sourceDirectory = "." }
