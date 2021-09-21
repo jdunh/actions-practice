@@ -24,7 +24,7 @@ jobs:
         if(-not $fileCopy.IsPresent) { $robocopyParameters = "/E " + $robocopyParameters }
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root \\52.170.75.125\C$\Users\jd\Desktop\testing -Credential $psCredentialObject -ErrorAction 'Stop'
-        robocopy "$sourceDirectory" "\\52.170.75.125\C$\Users\jd\Desktop\testing" "$filesToCopy" $robocopyParameters
+        robocopy "$sourceDirectory" "\\52.170.75.125\C$\Users\jd\Desktop\testing" "$filesToCopy" /COPY:DAT /E
         $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
         net use /delete '\\52.170.75.125\C$\Users\jd\Desktop\testing' '2>NUL'
         exit $copyExitCode
