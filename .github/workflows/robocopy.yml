@@ -32,7 +32,7 @@ jobs:
         exit $copyExitCode
       env:
         USER: jd
-        SOURCE_PATH: ".github/workflow"
+        SOURCE_PATH: ".github/workflows"
         DESTINATION: "\\\\52.170.75.125\\C$\\Users\\jd\\Desktop\\testing"
         COPY_ADDITIONAL_ARGS: "/COPY:DAT"
     - run: |-
@@ -58,6 +58,6 @@ jobs:
         exit $copyExitCode
       env:
         USER: jd
-        SOURCE_PATH: ".github/workflow/main.yml"
+        SOURCE_PATH: ".github/workflows/main.yml"
         DESTINATION: "\\\\jd-test.eastus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         COPY_ADDITIONAL_ARGS: "/COPY:DAT"
