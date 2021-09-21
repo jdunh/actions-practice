@@ -46,4 +46,4 @@ jobs:
         SOURCE_PATH: ".github/workflows/main.yml"
         DESTINATION: "\\\\jd-testing.westus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\\my_folder"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT"
-        CLEAN_DESTINATION: false
+        CLEAN_DESTINATION: true
