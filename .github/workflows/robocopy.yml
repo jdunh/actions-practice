@@ -44,6 +44,6 @@ jobs:
         USER: jd
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
         SOURCE_PATH: ".github/workflows/main.yml"
-        DESTINATION: "\\\\jd-testing.westus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
+        DESTINATION: "\\\\jd-testing.westus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\\my_folder"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT"
         CLEAN_DESTINATION: false
