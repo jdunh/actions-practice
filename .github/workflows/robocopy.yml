@@ -10,7 +10,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: |-
-        $sourcePath = ".github/workflows/main.yml"
+        $sourcePath = ".github/workflows"
         $robocopyParameters="/COPY:DAT"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
