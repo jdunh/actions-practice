@@ -16,50 +16,34 @@ jobs:
         $sourceDirectory = $sourcePath
         $filesToCopy = ""
         if($isFileCopy) {
-            $sourceDirectory = Split-Path $sourcePath
-            $filesToCopy = Split-Path $sourcePath -Leaf
-            if(-not $sourceDirectory){ $sourceDirectory = "." }
+          $sourceDirectory = Split-Path $sourcePath
+          $filesToCopy = Split-Path $sourcePath -Leaf
+          if(-not $sourceDirectory){ $sourceDirectory = "." }
         }
         else {
-            $robocopyParameters += " /E"
+          $robocopyParameters += " /E"
         }
+        # mount machine file share
         $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.DESTINATION }}" -Credential $psCredentialObject -ErrorAction "Stop"
-        $command = "robocopy `"$sourceDirectory`" `"${{ env.DESTINATION }}`" `"$filesToCopy`" $robocopyParameters"
-        Invoke-Expression $command
+        # clean destination
+        if("${{ env.CLEAN_DESTINATION}}" -eq "true") {
+          $tempDirectory = "${{ runner.temp }}/clean_up"
+          New-Item -ItemType Directory -Force -Path $tempDirectory
+          Invoke-Expression "robocopy `"$tempDirectory`" `"${{ env.DESTINATION }}`" `"*.*`" /NOCOPY /E /PURGE"
+          Remove-Item $tempDirectory -Recurse -ErrorAction Ignore
+        }
+        # copy files
+        Invoke-Expression "robocopy `"$sourceDirectory`" `"${{ env.DESTINATION }}`" `"$filesToCopy`" $robocopyParameters"
+        # robocopy exitcodes of 0 thru 8 are considered successful
         $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
+        # remove file share
         Remove-PSDrive -Name "WFCPSDrive" -ErrorAction SilentlyContinue
         exit $copyExitCode
       env:
         USER: jd
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
         SOURCE_PATH: ".github/workflows/"
-        DESTINATION: "\\\\52.170.75.125\\C$\\Users\\jd\\Desktop\\testing"
+        DESTINATION: "\\\\jd-testing.westus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT"
-    - run: |-
-        $sourcePath = "${{ env.SOURCE_PATH }}"
-        $robocopyParameters="${{ env.ADDITIONAL_COPY_ARGS }}"
-        $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
-        $sourceDirectory = $sourcePath
-        $filesToCopy = ""
-        if($isFileCopy) {
-            $sourceDirectory = Split-Path $sourcePath
-            $filesToCopy = Split-Path $sourcePath -Leaf
-            if(-not $sourceDirectory){ $sourceDirectory = "." }
-        }
-        else {
-            $robocopyParameters += " /E"
-        }
-        $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
-        New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.DESTINATION }}" -Credential $psCredentialObject -ErrorAction "Stop"
-        $command = "robocopy `"$sourceDirectory`" `"${{ env.DESTINATION }}`" `"$filesToCopy`" $robocopyParameters"
-        Invoke-Expression $command
-        $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
-        Remove-PSDrive -Name "WFCPSDrive" -ErrorAction SilentlyContinue
-        exit $copyExitCode
-      env:
-        USER: jd
-        PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
-        SOURCE_PATH: ".github/workflows/main.yml"
-        DESTINATION: "\\\\jd-test.eastus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
-        ADDITIONAL_COPY_ARGS: "/COPY:DAT"
+        CLEAN_DESTINATION: true
