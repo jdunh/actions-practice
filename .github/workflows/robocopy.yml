@@ -10,7 +10,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: |-
-        $sourcePath = "copy_me"
+        $sourcePath = ".github"
         $robocopyParameters="/COPY:DAT"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
@@ -31,7 +31,7 @@ jobs:
         Remove-PSDrive -Name "WFCPSDrive" -ErrorAction SilentlyContinue
         exit $copyExitCode
     - run: |-
-        $sourcePath = "copy_me"
+        $sourcePath = ".github/workflows/main.yml"
         $robocopyParameters="/COPY:DAT"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
