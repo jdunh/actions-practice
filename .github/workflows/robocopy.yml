@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@v2
     - run: |-
         $sourcePath = "${{ env.SOURCE_PATH }}"
-        $robocopyParameters="${{ env.COPY_ADDITIONAL_ARGS }}"
+        $robocopyParameters="${{ env.ADDITIONAL_COPY_ARGS }}"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
         $filesToCopy = ""
@@ -33,12 +33,12 @@ jobs:
       env:
         USER: jd
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
-        SOURCE_PATH: copy_me
+        SOURCE_PATH: ".github/workflows/"
         DESTINATION: "\\\\52.170.75.125\\C$\\Users\\jd\\Desktop\\testing"
-        COPY_ADDITIONAL_ARGS: "/COPY:DAT"
+        ADDITIONAL_COPY_ARGS: "/COPY:DAT"
     - run: |-
         $sourcePath = "${{ env.SOURCE_PATH }}"
-        $robocopyParameters="${{ env.COPY_ADDITIONAL_ARGS }}"
+        $robocopyParameters="${{ env.ADDITIONAL_COPY_ARGS }}"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
         $filesToCopy = ""
@@ -60,6 +60,6 @@ jobs:
       env:
         USER: jd
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
-        SOURCE_PATH: copy_me
+        SOURCE_PATH: ".github/workflows/main.yml"
         DESTINATION: "\\\\jd-test.eastus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
-        COPY_ADDITIONAL_ARGS: "/COPY:DAT"
+        ADDITIONAL_COPY_ARGS: "/COPY:DAT"
