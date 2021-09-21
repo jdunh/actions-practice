@@ -20,9 +20,6 @@ jobs:
             $filesToCopy = Split-Path $sourcePath -Leaf
             if(-not $sourceDirectory){ $sourceDirectory = "." }
         }
-        else {
-            $robocopyParameters += " /E"
-        }
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root \\52.170.75.125\C$\Users\jd\Desktop\testing -Credential $psCredentialObject -ErrorAction 'Stop'
         $command = "robocopy `"$sourceDirectory`" `"\\52.170.75.125\C$\Users\jd\Desktop\testing`" `"$filesToCopy`" $robocopyParameters"
