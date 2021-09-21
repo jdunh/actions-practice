@@ -23,7 +23,7 @@ jobs:
         else {
             $robocopyParameters += " /E"
         }
-        $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ secrets.WIN_SHARE_PASSWORD }}" -AsPlainText -Force)
+        $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.DESTINATION }}" -Credential $psCredentialObject -ErrorAction "Stop"
         $command = "robocopy `"$sourceDirectory`" `"${{ env.DESTINATION }}`" `"$filesToCopy`" $robocopyParameters"
         Invoke-Expression $command
@@ -32,7 +32,8 @@ jobs:
         exit $copyExitCode
       env:
         USER: jd
-        SOURCE_PATH: ".github/workflows"
+        PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
+        SOURCE_PATH: copy_me
         DESTINATION: "\\\\52.170.75.125\\C$\\Users\\jd\\Desktop\\testing"
         COPY_ADDITIONAL_ARGS: "/COPY:DAT"
     - run: |-
@@ -49,7 +50,7 @@ jobs:
         else {
             $robocopyParameters += " /E"
         }
-        $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ secrets.WIN_SHARE_PASSWORD }}" -AsPlainText -Force)
+        $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.DESTINATION }}" -Credential $psCredentialObject -ErrorAction "Stop"
         $command = "robocopy `"$sourceDirectory`" `"${{ env.DESTINATION }}`" `"$filesToCopy`" $robocopyParameters"
         Invoke-Expression $command
@@ -58,6 +59,7 @@ jobs:
         exit $copyExitCode
       env:
         USER: jd
-        SOURCE_PATH: ".github/workflows/main.yml"
+        PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
+        SOURCE_PATH: copy_me
         DESTINATION: "\\\\jd-test.eastus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         COPY_ADDITIONAL_ARGS: "/COPY:DAT"
