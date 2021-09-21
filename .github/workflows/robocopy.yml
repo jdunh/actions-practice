@@ -27,5 +27,7 @@ jobs:
         $command = "robocopy `"$sourceDirectory`" `"\\52.170.75.125\C$\Users\jd\Desktop\testing`" `"$filesToCopy`" $robocopyParameters"
         Invoke-Expression $command
         $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
-        net use /delete '\\52.170.75.125\C$\Users\jd\Desktop\testing' '2>NUL'
+        Get-PSDrive
+        Remove-PSDrive -Name "WFCPSDrive"
+        Get-PSDrive
         exit $copyExitCode
