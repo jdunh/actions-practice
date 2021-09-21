@@ -10,7 +10,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: |-
-        $sourcePath = ".github/workflows"
+        $sourcePath = ".github"
         $robocopyParameters="/COPY:DAT"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
         $sourceDirectory = $sourcePath
@@ -24,10 +24,9 @@ jobs:
         if(-not $fileCopy.IsPresent) { $robocopyParameters += " /E" }
         $psCredentialObject = New-Object pscredential -ArgumentList 'jd', (ConvertTo-SecureString -String '${{ secrets.WIN_SHARE_PASSWORD }}' -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root \\52.170.75.125\C$\Users\jd\Desktop\testing -Credential $psCredentialObject -ErrorAction 'Stop'
-        $command = "robocopy `"$sourceDirectory`" `"\\52.170.75.125\C$\Users\jd\Desktop\testing`" `"$filesToCopy`" $robocopyParameters"
+        $commmand = "robocopy `"$sourceDirectory`" `"\\52.170.75.125\C$\Users\jd\Desktop\testing`" `"$filesToCopy`" $robocopyParameters"
         Invoke-Expression $command
         $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
-        Get-PSDrive
-        Remove-PSDrive -Name "WFCPSDrive"
+        Remove-PSDrive -Name "WFCPSDrive" -ErrorAction SilentlyContinue
         Get-PSDrive
         exit $copyExitCode
