@@ -46,8 +46,8 @@ jobs:
       env:
         USER: jd-testing.southcentralus.cloudapp.azure.com\jd
         PASSWORD: "${{ secrets.FILE_SHARE_USER_PASSWORD }}"
-        SOURCE_PATH: .github/workflows
-        TARGET_PATH: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\\${{ github.run_id }}"
+        SOURCE_PATH: ".github/workflows/main.yml"
+        TARGET_PATH: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         FILE_SHARE: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT /pf"
-        CLEAN_DESTINATION: true
+        CLEAN_DESTINATION: false
