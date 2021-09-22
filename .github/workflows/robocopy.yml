@@ -27,9 +27,9 @@ jobs:
         # mount machine file share
         $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.FILE_SHARE }}" -Credential $psCredentialObject -ErrorAction "Stop"
-        # create target directory
+        # create missing target directories
         New-Item -ItemType Directory ${{ env.TARGET_PATH }} -ErrorAction 'Stop' -Force
-        # clean destination
+        # clean target directory
         if("${{ env.CLEAN_DESTINATION}}" -eq "true") {
           $tempDirectory = "${{ runner.temp }}/clean_up"
           New-Item -ItemType Directory -Force -Path $tempDirectory
@@ -45,9 +45,9 @@ jobs:
         exit $copyExitCode
       env:
         USER: jd-testing.southcentralus.cloudapp.azure.com\jd
-        PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
-        SOURCE_PATH: ".github\\workflows\\main.yml"
-        TARGET_PATH: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\\new\\1\\2"
+        PASSWORD: "${{ secrets.FILE_SHARE_USER_PASSWORD }}"
+        SOURCE_PATH: .github/workflows
+        TARGET_PATH: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         FILE_SHARE: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT /pf"
         CLEAN_DESTINATION: true
