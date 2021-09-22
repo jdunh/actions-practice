@@ -48,6 +48,6 @@ jobs:
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
         SOURCE_PATH: ".github/workflows"
         TARGET_PATH: C:\Users\jd\Desktop\testing\new\1
-        DESTINATION: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\\new\\1"
+        DESTINATION: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT /pf"
         CLEAN_DESTINATION: true
