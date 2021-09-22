@@ -26,7 +26,7 @@ jobs:
         }
         # mount machine file share
         $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
-        New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.DESTINATION }}" -Credential $psCredentialObject -ErrorAction "Stop"
+        New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.FILE_SHARE }}" -Credential $psCredentialObject -ErrorAction "Stop"
         # create target directory
         New-Item -ItemType Directory ${{ env.TARGET_PATH }} -ErrorAction 'Stop' -Force
         # clean destination
@@ -37,7 +37,7 @@ jobs:
           Remove-Item $tempDirectory -Recurse -ErrorAction Ignore
         }
         # copy files
-        Invoke-Expression "robocopy `"$sourceDirectory`" `"${{ env.DESTINATION }}`" `"$filesToCopy`" $robocopyParameters"
+        Invoke-Expression "robocopy `"$sourceDirectory`" `"${{ env.TARGET_PATH }}`" `"$filesToCopy`" $robocopyParameters"
         # robocopy exitcodes of 0 thru 8 are considered successful
         $copyExitCode = ($LASTEXITCODE -ge 8) ? 1 : 0
         # remove file share
@@ -48,6 +48,6 @@ jobs:
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
         SOURCE_PATH: ".github/workflows"
         TARGET_PATH: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\\new\\1"
-        DESTINATION: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
+        FILE_SHARE: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT /pf"
         CLEAN_DESTINATION: true
