@@ -44,7 +44,7 @@ jobs:
       env:
         USER: jd-testing.southcentralus.cloudapp.azure.com\jd
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
-        SOURCE_PATH: ".github/workflows/
+        SOURCE_PATH: ".github/workflows/"
         DESTINATION: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT /pf"
         CLEAN_DESTINATION: true
