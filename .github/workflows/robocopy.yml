@@ -28,7 +28,7 @@ jobs:
         $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.DESTINATION }}" -Credential $psCredentialObject -ErrorAction "Stop"
         # create target directory
-        New-Item -ItemType Directory WFCPSDrive:${{ TARGET_PATH }} -ErrorAction 'Stop' -Force
+        New-Item -ItemType Directory WFCPSDrive:${{ env.TARGET_PATH }} -ErrorAction 'Stop' -Force
         # clean destination
         if("${{ env.CLEAN_DESTINATION}}" -eq "true") {
           $tempDirectory = "${{ runner.temp }}/clean_up"
