@@ -9,18 +9,19 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: |-
+    - name: Copy Files to Machine File Share
+      run: |-
         $sourcePath = "${{ env.SOURCE_PATH }}"
         $robocopyParameters="${{ env.ADDITIONAL_COPY_ARGS }}"
         $isFileCopy = Test-Path -Path $sourcePath -PathType Leaf
-        $sourceDirectory = $sourcePath
-        $filesToCopy = ""
         if($isFileCopy) {
           $sourceDirectory = Split-Path $sourcePath
           $filesToCopy = Split-Path $sourcePath -Leaf
           if(-not $sourceDirectory){ $sourceDirectory = "." }
         }
         else {
+          $sourceDirectory = $sourcePath
+          $filesToCopy = ""
           $robocopyParameters += " /E"
         }
         # mount machine file share
@@ -41,9 +42,9 @@ jobs:
         Remove-PSDrive -Name "WFCPSDrive" -ErrorAction SilentlyContinue
         exit $copyExitCode
       env:
-        USER: jd
+        USER: jd-testing.southcentralus.cloudapp.azure.com\jd
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
-        SOURCE_PATH: ".github/workflows/main.yml"
-        DESTINATION: "\\\\jd-testing.westus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\\my_folder"
-        ADDITIONAL_COPY_ARGS: "/COPY:DAT"
+        SOURCE_PATH: ".github/workflows/
+        DESTINATION: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
+        ADDITIONAL_COPY_ARGS: "/COPY:DAT /pf"
         CLEAN_DESTINATION: true
