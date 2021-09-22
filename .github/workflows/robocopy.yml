@@ -28,12 +28,12 @@ jobs:
         $psCredentialObject = New-Object pscredential -ArgumentList "${{ env.USER }}", (ConvertTo-SecureString -String "${{ env.PASSWORD }}" -AsPlainText -Force)
         New-PSDrive -Name 'WFCPSDrive' -PSProvider FileSystem -Root "${{ env.DESTINATION }}" -Credential $psCredentialObject -ErrorAction "Stop"
         # create target directory
-        New-Item -ItemType Directory WFCPSDrive:${{ env.TARGET_PATH }} -ErrorAction 'Stop' -Force
+        New-Item -ItemType Directory ${{ env.TARGET_PATH }} -ErrorAction 'Stop' -Force
         # clean destination
         if("${{ env.CLEAN_DESTINATION}}" -eq "true") {
           $tempDirectory = "${{ runner.temp }}/clean_up"
           New-Item -ItemType Directory -Force -Path $tempDirectory
-          Invoke-Expression "robocopy `"$tempDirectory`" `"${{ env.DESTINATION }}`" `"*.*`" /NOCOPY /E /PURGE"
+          Invoke-Expression "robocopy `"$tempDirectory`" `"${{ env.TARGET_PATH }}`" `"*.*`" /NOCOPY /E /PURGE"
           Remove-Item $tempDirectory -Recurse -ErrorAction Ignore
         }
         # copy files
@@ -47,7 +47,7 @@ jobs:
         USER: jd-testing.southcentralus.cloudapp.azure.com\jd
         PASSWORD: "${{ secrets.WIN_SHARE_PASSWORD }}"
         SOURCE_PATH: ".github/workflows"
-        TARGET_PATH: C:\Users\jd\Desktop\testing\new\1
+        TARGET_PATH: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing\new\1"
         DESTINATION: "\\\\jd-testing.southcentralus.cloudapp.azure.com\\C$\\Users\\jd\\Desktop\\testing"
         ADDITIONAL_COPY_ARGS: "/COPY:DAT /pf"
         CLEAN_DESTINATION: true
