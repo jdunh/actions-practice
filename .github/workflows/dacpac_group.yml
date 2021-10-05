@@ -1,0 +1,20 @@
+name: build-playground/SqlDacpacDeploymentOnMachineGroup
+on: [workflow_dispatch]
+env:
+  SYSTEM.DEBUG: 'true'
+jobs:
+  Job:
+    runs-on: windows-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Install Powershell Module TaskModuleSqlUtility
+      shell: pwsh
+      run: |-
+        Install-Module -Name TaskModuleSqlUtility -Scope CurrentUser -Force
+        Install-Module -Name SqlServer -Scope CurrentUser -Force
+    - shell: pwsh
+      run: |-
+        [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo")
+        $psCredentialObject = New-Object pscredential -ArgumentList "jd", (ConvertTo-SecureString -String "${{ secrets.SQL_DEPLOY_PASSWORD }}" -AsPlainText -Force)
+        Invoke-SqlQueryDeployment -taskType "sqlQuery" -sqlFile "my_script.sql" -serverName "jd-testing.database.windows.net" -databaseName "jd-testing" -authscheme "sqlServerAuthentication" -sqlServerCredentials $psCredentialObject
