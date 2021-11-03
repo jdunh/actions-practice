@@ -1,0 +1,12 @@
+name: valet-dev-testing/circle-demo/build
+on:
+  push:
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+    container:
+      image: buildpack-deps:trusty
+    steps:
+    - run: |-
+        curl -O --silent --show-error --location --fail --retry 3 \
+        https://github.com/jwilder/dockerize/releases/download/latest/dockerize-linux-amd64-latest.tar.gz
