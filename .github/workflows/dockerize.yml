@@ -11,8 +11,9 @@ jobs:
         curl -O --silent --show-error --location --fail --retry 3 \
         https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz
         tar xf "dockerize-linux-amd64-v0.6.1.tar.gz"
-
+        ls
         rm -f "dockerize-linux-amd64-v0.6.1.tar.gz"
+        ls
         chmod +x dockerize
         echo "dockerize $(dockerize --version) has been installed to $(which dockerize)"
 
