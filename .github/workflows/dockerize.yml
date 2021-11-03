@@ -6,14 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: buildpack-deps:trusty
+    env:
+      INSTALL_DIR: "/usr/local/bin"
     steps:
     - run: |-
         curl -O --silent --show-error --location --fail --retry 3 \
         https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz
         tar xf "dockerize-linux-amd64-v0.6.1.tar.gz"
-        ls
         rm -f "dockerize-linux-amd64-v0.6.1.tar.gz"
-        ls
-        chmod +x dockerize
+        mv dockerize ${{ env.INSTALL_DIR }}
+        chmod +x ${{ env.INSTALL_DIR }}/dockerize
         echo "dockerize $(dockerize --version) has been installed to $(which dockerize)"
 
