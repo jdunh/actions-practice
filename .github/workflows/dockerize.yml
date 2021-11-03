@@ -12,9 +12,9 @@ jobs:
     steps:
     - run: |-
         curl -O --silent --show-error --location --fail --retry 3 \
-        https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-{{ env.VERSION }}.tar.gz
-        tar xf "dockerize-linux-amd64-{{ env.VERSION }}.tar.gz"
-        rm -f "dockerize-linux-amd64-{{ env.VERSION }}.tar.gz"
+        https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-${{ env.VERSION }}.tar.gz
+        tar xf "dockerize-linux-amd64-${{ env.VERSION }}.tar.gz"
+        rm -f "dockerize-linux-amd64-${{ env.VERSION }}.tar.gz"
         mv dockerize ${{ env.INSTALL_DIR }}
         chmod +x ${{ env.INSTALL_DIR }}/dockerize
         echo "dockerize $(dockerize --version) has been installed to $(which dockerize)"
