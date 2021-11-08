@@ -11,8 +11,11 @@ jobs:
       cancel-in-progress: false
     if: github.event_type != 'pull_request'
     steps:
-      - run: echo "Stage-1"
-      
+    - name: Bash Script
+      run: |-
+        # Write your commands here
+        echo 'Stage 1'
+      shell: bash
   Stage-2:
     needs:
     - Stage-1
@@ -25,4 +28,8 @@ jobs:
       cancel-in-progress: false
     if: github.event_type != 'pull_request'
     steps:
-      - run: echo "Stage-1"
+    - name: Bash Script
+      run: |-
+        # Write your commands here
+        echo 'Stage 2'
+      shell: bash
