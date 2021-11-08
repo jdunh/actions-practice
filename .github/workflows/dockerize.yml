@@ -1,6 +1,7 @@
 name: valet-dev-testing/circle-demo/build
 on:
-  push:
+  workflow_dispatch:
+    
 jobs:
   docker-test:
     runs-on: ubuntu-latest
