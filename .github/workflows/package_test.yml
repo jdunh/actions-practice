@@ -12,25 +12,23 @@ jobs:
       - name: package?
         shell: bash
         run: |
-          robocopy
+          which jq
 
 
-#   macos:
-#     runs-on: macos-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: package?
-#         run: |
-#           which xcpretty
-#           which unzip
-#           which tar
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: package?
+        run: |
+          which jq
+
           
-#   ubuntu:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: package?
-#         run: |
-#           which 7z
-#           which unzip
-#           which tar
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: package?
+        run: |
+          which jq
+
