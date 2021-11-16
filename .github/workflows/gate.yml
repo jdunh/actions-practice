@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   Dev:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     concurrency:
       group: "${{ github.ref }}"
       cancel-in-progress: false
@@ -16,7 +16,7 @@ jobs:
         -H Content-Type:application/json \
         | jq -e '${{env.SUCCESS_CRITERIA }}'
       env:
-        SUCCESS_CRITERIA: '.url == "https://httpbin.org/posst"'
+        SUCCESS_CRITERIA: '.url == "https://httpbin.org/post"'
     - name: Bash Script
       run: |-
         # Write your commands here
