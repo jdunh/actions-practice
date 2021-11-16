@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: 'Gate Test'
       run: |-
-        curl -f -X "GET" https://httpbin.org/post \
+        curl -f -X "POST" https://httpbin.org/post \
         -H Content-Type:application/json \
         | jq -e '${{env.SUCCESS_CRITERIA }}'
       env:
