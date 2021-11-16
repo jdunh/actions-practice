@@ -10,6 +10,7 @@ jobs:
     if: github.event_type != 'pull_request'
     steps:
     - name: 'Gate Test'
+      shell: bash
       run: |-
         curl -f -X "POST" https://httpbin.org/post \
         -H Content-Type:application/json \
