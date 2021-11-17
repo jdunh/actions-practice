@@ -3,20 +3,32 @@ on:
   workflow_dispatch:
 jobs:
   Dev:
-    runs-on: macos-latest
+    runs-on: windows-latest
+    environment:
+      name: Dev
     concurrency:
       group: "${{ github.ref }}"
       cancel-in-progress: false
     if: github.event_type != 'pull_request'
     steps:
-    - name: 'Gate Test'
+    - name: 'Invoke REST API: POST'
       shell: bash
       run: |-
-        curl -f -X "POST" https://httpbin.org/post \
+        curl -f -X "POST" ${{ env.BASE_URL }}/post \
         -H Content-Type:application/json \
-        | jq -e '${{env.SUCCESS_CRITERIA }}'
+        -d '{"name"=>"matz"}' \
       env:
-        SUCCESS_CRITERIA: '.url == "https://httpbin.org/post"'
+        BASE_URL: https://httpbin.org
+    - name: 'Invoke REST API: GET'
+      uses: Azure/login@v1
+      with:
+        creds: "${{ secrets.AZURE_CREDENTIALS }}"
+    - name: 'Invoke REST API: GET'
+      shell: bash
+      run: |-
+        az rest --method GET \
+        --url https://management.azure.com/subscriptions/{subscriptionId}/resources?api-version=2019-07-01 \
+        --headers Content-Type="application/json" Auth="token 1234" \
     - name: Bash Script
       run: |-
         # Write your commands here
