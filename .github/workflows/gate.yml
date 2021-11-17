@@ -27,7 +27,7 @@ jobs:
       shell: bash
       run: |-
         az rest --method GET \
-        --url https://management.azure.com/subscriptions/{subscriptionId}/resources?api-version=2019-07-01 \
+        --url https://management.azure.com/subscriptions/{subscriptionId}/resource?api-version=2019-07-01 \
         --headers Content-Type="application/json" Auth="token 1234" 
     - name: Bash Script
       run: |-
