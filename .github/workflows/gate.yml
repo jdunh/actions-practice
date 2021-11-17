@@ -18,7 +18,8 @@ jobs:
         -H Content-Type:application/json \
         -d '{"name"=>"matz"}' \
       env:
-        BASE_URL: https://httpbin.org
+        BASE_URL: UPDATE_ME
+        SUCCESS_CRITERIA: UPDATE_ME
     - name: 'Invoke REST API: GET'
       uses: Azure/login@v1
       with:
@@ -27,8 +28,11 @@ jobs:
       shell: bash
       run: |-
         az rest --method GET \
-        --url https://management.azure.com/subscriptions/{subscriptionId}/resource?api-version=2019-07-01 \
-        --headers Content-Type="application/json" Auth="token 1234" 
+        --url https://management.azure.com/subscriptions/${{ secrets.AZURE_SUBSCRIPTION }}/resources?api-version=2019-07-01 \
+        --headers Content-Type="application/json" Auth="token 1234" \
+        | jq -e '${{ env.SUCCESS_CRITERIA }}'
+      env:
+        SUCCESS_CRITERIA: '.value[0].kind == "webs"'
     - name: Bash Script
       run: |-
         # Write your commands here
