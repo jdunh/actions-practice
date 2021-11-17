@@ -18,7 +18,7 @@ jobs:
         -H Content-Type:application/json \
         -d '{"name"=>"matz"}' \
       env:
-        BASE_URL: UPDATE_ME
+        BASE_URL: https://httpbin.org
         SUCCESS_CRITERIA: UPDATE_ME
     - name: 'Invoke REST API: GET'
       uses: Azure/login@v1
