@@ -32,7 +32,7 @@ jobs:
         --headers Content-Type="application/json" Auth="token 1234" \
         | jq -e '${{ env.SUCCESS_CRITERIA }}'
       env:
-        SUCCESS_CRITERIA: '.value[0].kind == "web"'
+        SUCCESS_CRITERIA: '.value == []'
     - name: Bash Script
       run: |-
         # Write your commands here
