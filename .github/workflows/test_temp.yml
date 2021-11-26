@@ -11,5 +11,5 @@ jobs:
       run: echo ${{ runner.temp }}
     - shell: bash
       run: |-
-        touch ${{ runner.temp }}\/new.txt
+        cd ${{ runner.temp }} && touch new.txt
         ls ${{ runner.temp }}
