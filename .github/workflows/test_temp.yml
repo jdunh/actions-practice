@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   Job:
-    runs-on: windows-latest
+    runs-on: macos-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
