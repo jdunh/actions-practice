@@ -9,12 +9,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-#     # This item has no matching transformer
-#     - task: HelmInstaller@0
-#       inputs:
-#         helmVersion: 3.6.3
-#         checkLatestHelmVersion: false
-#         installKubectl: true
+    - uses: azure/setup-helm@v1
+      with:
+        version: '3.6.3'
+      id: install
     - continue-on-error: true
       uses: azure/k8s-set-context@v1
       with:
