@@ -24,8 +24,8 @@ jobs:
       shell: bash
       run: |-
         export HELM_EXPERIMENTAL_OCI=1
-        helm chart save ./hello-world jdtesting.azurecr.io/helm/ado_hello_world
+        helm chart save ./hello_world jdtesting.azurecr.io/helm/ado_hello_world
         helm registry login jdtesting.azurecr.io --username ${{ secrets.ACR_USER_NAME }} --password ${{ secrets.ACR_PASSWORD }}
-        helm chart push jdtesting.azurecr.io/helm/hello-world:${{ env.CHART_VERSION }}
+        helm chart push jdtesting.azurecr.io/helm/ado_hello_world:${{ env.CHART_VERSION }}
       env:
         CHART_VERSION: 0.1.2
