@@ -21,27 +21,13 @@ jobs:
         method: service-account
         k8s-url: "${{ secrets.K8S_URL }}"
         k8s-secret: "${{ secrets.K8S_SECRET }}"
-    - continue-on-error: true
-      shell: bash
-      run: helm create --namespace default myCharts
     - run: helm repo add bitnami https://charts.bitnami.com/bitnami
     - continue-on-error: true
       shell: bash
-      run: |
-        if  helm version --client --short | grep -q "v3"; then
-          helm install --namespace default --values values.yml --set key1=val1,key2=val2 --dependency-update mysql bitnami/mysql --version 8.8.11
-        else
-          helm install --namespace default --values values.yml --set key1=val1,key2=val2 --dependency-update --name mysql --wait --dry-run bitnami/mysql --version 8.8.11
-        fi
-    - continue-on-error: true
-      shell: bash
-      run: helm ls
-    - continue-on-error: true
-      shell: bash
-      run: helm get --namespace default all mysql
-    - continue-on-error: true
-      shell: bash
-      run: helm rollback --namespace default mysql
-    - continue-on-error: true
-      shell: bash
-      run: helm uninstall --namespace default mysql
+      run: |-
+        export HELM_EXPERIMENTAL_OCI=1
+        helm chart save ./hello-world jdtesting.azurecr.io/helm/ado_hello_world
+        helm registry login jdtesting.azurecr.io --username ${{ secrets.ACR_USER_NAME }} --password ${{ secrets.ACR_PASSWORD }}
+        helm chart push jdtesting.azurecr.io/helm/hello-world:${{ env.CHART_VERSION }}
+      env:
+        CHART_VERSION: 0.1.2
