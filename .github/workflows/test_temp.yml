@@ -12,3 +12,4 @@ jobs:
     - shell: bash
       run: |-
         pwd
+        ls  /d/a/_temp
