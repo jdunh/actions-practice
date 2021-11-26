@@ -14,18 +14,18 @@ jobs:
         version: '3.6.3'
       id: install
     - continue-on-error: true
-      uses: azure/k8s-set-context@v1
+      uses: azure/aks-set-context@v1
       with:
-        method: service-account
-        k8s-url: "${{ secrets.K8S_URL }}"
-        k8s-secret: "${{ secrets.K8S_SECRET }}"
+        creds: "${{ secrets.AZURE_CREDENTIALS }}"
+        resource-group: myResourceGroup
+        cluster-name: myAKSCluster
     - run: helm repo add bitnami https://charts.bitnami.com/bitnami
     - continue-on-error: true
       shell: bash
       run: |-
         export HELM_EXPERIMENTAL_OCI=1
-        helm chart save ./hello_world jdtesting.azurecr.io/helm/ado_hello_world
+        helm chart save ./hello_world jdtesting.azurecr.io/helm/az_hello_world
         helm registry login jdtesting.azurecr.io --username ${{ secrets.ACR_USER_NAME }} --password ${{ secrets.ACR_PASSWORD }}
-        helm chart push jdtesting.azurecr.io/helm/ado_hello_world:${{ env.CHART_VERSION }}
+        helm chart push jdtesting.azurecr.io/helm/az_hello_world:${{ env.CHART_VERSION }}
       env:
         CHART_VERSION: 0.1.2
