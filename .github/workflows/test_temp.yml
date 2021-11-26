@@ -7,15 +7,4 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: mkdir testing
-    - name: Create Inline SQL File
-      shell: bash
-      run: |
-        cat > ${{runner.temp}}\dacpac_deploy.sql <<'EOL'
-        INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
-        INSERT INTO dbo.BuildVersion ([Database Version], VersionDate) VALUES (1, CURRENT_TIMESTAMP)
-        EOL
-    - run: cat ${{ runner.temp }}\dacpac_deploy.sql
-      shell: bash
-    - run: ls .
     - run: echo ${{ runner.temp }}
