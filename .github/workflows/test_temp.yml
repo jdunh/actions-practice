@@ -11,5 +11,4 @@ jobs:
       run: echo ${{ runner.temp }}
     - shell: bash
       run: |-
-        echo $TMPDIR
-        ls ${{ runner.temp }}
+        pwd
