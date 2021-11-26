@@ -24,25 +24,13 @@ jobs:
       shell: bash
       run: |
         if  helm version --client --short | grep -q "v3"; then
-          helm install --namespace default --values values.yml --set key1=val1,key2=val2 --dependency-update mysql --wait --dry-run bitnami/mysql --version 8.8.11
+          helm install --namespace default --values values.yml --set key1=val1,key2=val2 --dependency-update mysql bitnami/mysql --version 8.8.11
         else
-          helm install --namespace default --values values.yml --set key1=val1,key2=val2 --dependency-update --name mysql --wait --dry-run bitnami/mysql --version 8.8.11
+          helm install --namespace default --values values.yml --set key1=val1,key2=val2 --dependency-update --name mysql bitnami/mysql --version 8.8.11
         fi
-    - continue-on-error: true
-      uses: azure/aks-set-context@v1
-      with:
-        creds: "${{ secrets.AZURE_CREDENTIALS }}"
-        resource-group: myResourceGroup
-        cluster-name: myAKSCluster
     - continue-on-error: true
       shell: bash
       run: helm ls --namespace default
-    - continue-on-error: true
-      uses: azure/k8s-set-context@v1
-      with:
-        method: service-account
-        k8s-url: "${{ secrets.K8S_URL }}"
-        k8s-secret: "${{ secrets.K8S_SECRET }}"
     - continue-on-error: true
       shell: bash
       run: helm delete --namespace default mysql
