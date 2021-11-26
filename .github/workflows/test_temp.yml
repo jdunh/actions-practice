@@ -11,5 +11,5 @@ jobs:
       run: echo ${{ runner.temp }}
     - shell: bash
       run: |-
-        touch D:/a/_temp/new.txt
+        touch ${{ runner.temp }}\/new.txt
         ls ${{ runner.temp }}
