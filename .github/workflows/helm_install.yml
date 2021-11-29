@@ -30,4 +30,4 @@ jobs:
         version: latest
     - uses: azure/setup-helm@v1
       with:
-        version: v3.6.11
+        version: v3.7.0
