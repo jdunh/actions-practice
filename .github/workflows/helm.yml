@@ -13,12 +13,6 @@ jobs:
       with:
         version: '3.6.3'
       id: install
-    - continue-on-error: true
-      uses: azure/aks-set-context@v1
-      with:
-        creds: "${{ secrets.AZURE_CREDENTIALS }}"
-        resource-group: myResourceGroup
-        cluster-name: myAKSCluster
     - shell: bash
       run: |-
         export HELM_EXPERIMENTAL_OCI=1
