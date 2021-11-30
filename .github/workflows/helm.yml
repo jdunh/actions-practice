@@ -16,5 +16,9 @@ jobs:
     - shell: bash
       run: |-
         export HELM_EXPERIMENTAL_OCI=1
-        version=$(helm chart save ./hello_world jdtesting.azurecr.io/helm/ado_hello_world | grep ref | cut -d : -f3)     
-        echo "jdtesting.azurecr.io/helm/ado_hello_world:$version"
+        version=$(helm chart save ./hello_world jdtesting.azurecr.io/helm/ado_hello_world | grep ref | cut -d : -f3)
+        helm registry login jdtesting.azurecr.io --username ${{ secrets.ACR_USER_NAME }} --password ${{ secrets.ACR_PASSWORD }}
+        helm chart push jdtesting.azurecr.io/helm/ado_hello_world:$version
+        helm chart list
+        helm chart remove jdtesting.azurecr.io/helm/ado_hello_world:$version
+        helm chart list
