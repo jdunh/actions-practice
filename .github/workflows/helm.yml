@@ -16,6 +16,5 @@ jobs:
     - shell: bash
       run: |-
         export HELM_EXPERIMENTAL_OCI=1
-        version=$(helm chart save ./hello_world jdtesting.azurecr.io/helm/ado_hello_world | grep ref | cut -d : -f3)
-       
+        version=$(helm chart save ./helm_test/hello_world jdtesting.azurecr.io/helm/ado_hello_world | grep ref | cut -d : -f3)     
         echo "jdtesting.azurecr.io/helm/ado_hello_world:$version"
