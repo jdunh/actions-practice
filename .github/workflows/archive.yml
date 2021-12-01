@@ -1,0 +1,13 @@
+name: build-playground/joel.dunham/archiveFiles
+on:
+  workflow_dispatch:
+jobs:
+  Job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Zip files
+      run: 7z u ${{ runner.temp }}/${{ github.run_id }}.zip ${{ github.workspace }}/copy_me
+    - name: Tar files
+      run: tar -czf ${{ runner.temp }}/${{ github.run_id }}.zip ${{ github.workspace }} --overwrite
