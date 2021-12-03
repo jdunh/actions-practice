@@ -1,0 +1,25 @@
+name: VariableExpansion
+on:
+  workflow_dispatch:
+env:
+  agents_multiline: |
+    {
+      Agent1: {
+        parameterPath: "${{ github.workspace }}/Previous/Security-Storage-AuditforHTTPsEnabled/parameters/brown/ResourceType-Noncompliant.json"
+      }
+    },
+  agents_strings: "{\n  Agent1: {\n    parameterPath: \"test1.json\"\n  },\n  Agent2: {\n    parameterPath: \"test2.json\"\n  },\n  Agent3: {\n    parameterPath: \"test3.json\"\n  } \n},\n"
+jobs:
+  Job:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        parameterPath:
+        - test1.json
+        - test2.json
+        - test3.json
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Run a one-line script
+      run: echo "Agent ${{ matrix.parameterPath }}"
