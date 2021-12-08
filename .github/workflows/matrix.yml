@@ -4,6 +4,9 @@ on:
 jobs:
   Stage-1-job-1:
     runs-on: windows-latest
+    concurrency:
+      group: "${{ github.ref }}"
+      cancel-in-progress: false
     if: github.event_type != 'pull_request'
     strategy:
       max-parallel: 2
@@ -14,15 +17,20 @@ jobs:
         # Write your commands here
         echo 'Hello From Agent Job!'
       shell: bash
-  Stage-1-job-2:
+  Stage-1-deployment-job-2:
     needs:
     - Stage-1-job-1
     runs-on: ${{ matrix.agent }}
-    if: success() || failure() && github.event_type != 'pull_request'
+    concurrency:
+      group: "${{ github.ref }}"
+      cancel-in-progress: false
+    if: github.event_type != 'pull_request'
+    timeout-minutes: 10
     strategy:
+      max-parallel: 1
       matrix:
         agent:
-        - windows-latest
+        - macos-latest
         - ubuntu-latest
     steps:
     - name: Bash Script
