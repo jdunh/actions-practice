@@ -1,0 +1,32 @@
+name: build-playground/DeploymentGroupFun
+on:
+  workflow_dispatch:
+jobs:
+  Stage-1-job-1:
+    runs-on: windows-latest
+    if: github.event_type != 'pull_request'
+    strategy:
+      max-parallel: 2
+      fail-fast: false
+    steps:
+    - name: Bash Script
+      run: |-
+        # Write your commands here
+        echo 'Hello From Agent Job!'
+      shell: bash
+  Stage-1-job-2:
+    needs:
+    - Stage-1-job-1
+    runs-on: ${{ matrix.agent }}
+    if: success() || failure() && github.event_type != 'pull_request'
+    strategy:
+      matrix:
+        agent:
+        - windows-latest
+        - ubuntu-latest
+    steps:
+    - name: Bash Script
+      run: |-
+        # Write your commands here
+        echo 'Hello from Deployment Group Job!'
+      shell: bash
