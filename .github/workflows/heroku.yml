@@ -1,0 +1,11 @@
+name: heroku
+on:
+  push:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container:
+      image: cimg/base:1.2.3
+    steps:
+    - uses: actions/checkout@v2
+    - run: 'echo "The command above installs Heroku, the command below deploys. What you do inbetween is up to you!"'
