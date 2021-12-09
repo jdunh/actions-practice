@@ -5,7 +5,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     container:
-      options: --user root
+#       options: --user root
       image: cimg/base:stable
     steps:
     - uses: actions/checkout@v2
