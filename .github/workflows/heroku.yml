@@ -1,19 +1,18 @@
-name: heroku
+name: valet-dev-testing/circle-demo/heroku_deploy
 on:
   push:
 jobs:
   deploy:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu
+      image: cimg/base:stable
+      options: "--user root"
     steps:
     - uses: actions/checkout@v2
-    - shell: bash
-      run: |-
+    - run: |-
         if [[ $(command -v heroku) == "" ]]; then
           curl https://cli-assets.heroku.com/install.sh | sh
         else
           echo "Heroku is already installed. No operation was performed."
         fi
-    - shell: bash
-      run: heroku -v
+    - run: 'which heroku'
