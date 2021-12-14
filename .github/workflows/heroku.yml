@@ -12,6 +12,7 @@ jobs:
     - shell: bash
       env:
         PRINT_WHOAMI: false
+        HEROKU_API_KEY: 123
       run: |-
         if [[ $HEROKU_API_KEY == "" ]]; then
           echo "No Heroku API key set, please set the HEROKU_API_KEY environment variable."
