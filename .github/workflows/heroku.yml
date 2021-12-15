@@ -4,9 +4,8 @@ on:
 jobs:
   example:
     runs-on: ubuntu-latest
-    container:
-      image: cimg/base:stable
-      options: "--user root"
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
     steps:
     - uses: actions/checkout@v2
     - shell: bash
@@ -17,16 +16,7 @@ jobs:
           echo "Heroku is already installed. No operation was performed."
         fi
     - shell: bash
-      env:
-        HEROKU_API_KEY: 123
-        PRINT_WHOAMI: true
       run: |-
-        if [[ $HEROKU_API_KEY == "" ]]; then
-          echo "No Heroku API key set, please set the HEROKU_API_KEY environment variable."
-          echo "This can be found by running the `heroku auth:token` command locally."
-          exit 1
-        else
-          echo "Heroku API key found."
-          if [[ $PRINT_WHOAMI == "true" ]]; then heroku auth:whoami; fi
-        fi
-    - run: which heroku
+        heroku container:login
+        heroku container:release -a tranquil-springs-41774 web
+      timeout-minutes: 10
