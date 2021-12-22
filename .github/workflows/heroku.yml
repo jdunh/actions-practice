@@ -1,6 +1,6 @@
 name: valet-dev-testing/circle-demo/heroku_deploy
-on:
-  push:
+on: workflow_dispatch
+
 jobs:
   example:
     runs-on: ubuntu-latest
