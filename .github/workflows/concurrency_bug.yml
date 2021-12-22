@@ -2,11 +2,7 @@ name: Project CI
 concurrency:
   cancel-in-progress: true  # "Syntax error" here?
   group: muffins
-on:
-  pull_request:
-    branches: [devel, staging, prod]
-  push:
-    branches: [devel, staging, prod]
+on: workflow_dispatch
 jobs:
   test_ui:
     defaults:
