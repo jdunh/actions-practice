@@ -1,0 +1,24 @@
+name: Project CI
+concurrency:
+  cancel-in-progress: true  # "Syntax error" here?
+  group: muffins
+on:
+  pull_request:
+    branches: [devel, staging, prod]
+  push:
+    branches: [devel, staging, prod]
+jobs:
+  test_ui:
+    defaults:
+      run:
+        working-directory: ./ui
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: npm run validate
