@@ -2,7 +2,7 @@ name: Project CI
 concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: true
-on: workflow_dispatch
+on: [push, pull_request, workflow_dispatch]
 jobs:
   test_ui:
     defaults:
