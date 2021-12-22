@@ -1,7 +1,7 @@
 name: Project CI
 concurrency:
-  cancel-in-progress: true  # "Syntax error" here?
-  group: muffins
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
 on: workflow_dispatch
 jobs:
   test_ui:
