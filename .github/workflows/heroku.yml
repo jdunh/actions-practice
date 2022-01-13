@@ -27,8 +27,6 @@ jobs:
           if [[ $PRINT_WHOAMI == "true" ]]; then heroku auth:whoami; fi
         fi
     - uses: actions/checkout@v2
-    - run: heroku maintenance:on --app sprinkle-donut-123
-    - run: echo "running pre-deploy command"
     - shell: bash
       run: |-
         heroku container:login
@@ -39,5 +37,3 @@ jobs:
         heroku container:login
         heroku container:release -a sprinkle-donut-123 web
       timeout-minutes: 10
-    - run: echo "running database migration command"
-    - run: heroku maintenance:off --app sprinkle-donut-123
